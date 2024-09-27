@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Scrapshy Chromium Extension",
+  "short_name": "Scrapshy Chromium Extension",
+  "version": "0.1.0",
+  "description": "Scrapshy Chromium Extension scaffold project",
+  "permissions": ["tabs", "sidePanel", "scripting", "storage","activeTab"],
+  "action": {
+    "default_popup": "index.html?#/popup",
+    "default_title": "Scrapshy Chromium Extension",
+    "default_icon" : "assets/scrap.png"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "options_page": "index.html?#/options",
+  "side_panel": {
+    "default_path": "side_panel.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html?#/tab"
+  },
+  "content_scripts": [
+    {
+      "js": ["contentPage.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'self'" }
+}
