@@ -21,16 +21,24 @@ export class PopupComponent {
   ) {}
 
   onClick() {
-    /* chrome.tabs.sendMessage(this.tabId, 'request', (msg) => {
-      this.message.set(
-        chrome.runtime.lastError
-          ? 'The current page is protected by the browser, goto: https://www.google.nl and try again.'
-          : msg
-      )
-    }) */
-      this.sc.scrap().then((data: string) => {
-      //this.scrapper.set(data);
-      this.message.set(JSON.stringify(data));
-    })
+    const data = this.sc.scrap_2();
+    this.message.set(JSON.stringify(data));
+    chrome.scripting.executeScript(
+      {
+        target: { tabId: this.tabId },
+        func: (msg) => {
+          return msg
+        },
+        args: [JSON.stringify(data)],
+      },
+      (results) => {
+        // Los resultados de la función inyectada se devuelven aquí
+        if (results && results[0]) {
+          console.log('Resultado del script:', results[0].result);
+          this.message.set(results[0].result); // Actualiza la señal con el resultado
+        }
+      }
+    );
+
   }
 }
