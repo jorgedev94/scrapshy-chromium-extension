@@ -16,7 +16,7 @@ export class Scrapshy {
         // This service can now make HTTP requests via `this.http`.
     }
 
-    scrap_2() {
+    scrap_2(document) {
         function getSpanTexts(texts: string[]) {
             console.log(document)
             const textConditions = texts.map((text) => `text()="${text}"`).join(' or ');

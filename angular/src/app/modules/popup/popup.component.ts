@@ -21,21 +21,19 @@ export class PopupComponent {
   ) {}
 
   onClick() {
-    const data = this.sc.scrap_2();
-    this.message.set(JSON.stringify(data));
     chrome.scripting.executeScript(
       {
         target: { tabId: this.tabId },
-        func: (msg) => {
-          return msg
-        },
-        args: [JSON.stringify(data)],
+        func: () => {
+          console.log(document)
+          return this.sc.scrap_2(document);
+        }
       },
       (results) => {
         // Los resultados de la función inyectada se devuelven aquí
         if (results && results[0]) {
           console.log('Resultado del script:', results[0].result);
-          this.message.set(results[0].result); // Actualiza la señal con el resultado
+          //this.message.set(results[0].result); // Actualiza la señal con el resultado
         }
       }
     );
