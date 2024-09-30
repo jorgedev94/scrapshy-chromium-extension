@@ -1,0 +1,62 @@
+.container {
+    padding: 20px;
+    width: 300px;
+}
+
+.header-list li{
+margin: 10px;
+}
+
+.grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+gap: 15px; /* Espacio entre los elementos */
+}
+
+.grid-item {
+padding: 10px;
+border: 1px solid #03cade;
+border-radius: 20px;
+transition: border-color 0.3s; /* Transición suave para el borde */
+font-weight: bold;
+}
+
+.grid-item:hover {
+border-color: #007d8a; /* Cambia el color del borde al pasar el mouse */
+background-color: #78d9e6; /* Color de fondo al hacer hover */
+}
+
+.header-item {
+grid-column: span 2; /* Ocupa ambas columnas */
+background-color: #f0f0f0; /* Color de fondo para la fila de encabezado */
+}
+
+.data-container {
+grid-column: span 2; /* Ocupa ambas columnas */
+display: flex; /* Usar flexbox para alinear las columnas */
+}
+
+.data-column {
+flex: 1; /* Hacer que cada columna ocupe el mismo espacio */
+}
+
+.header-list,
+.data-list {
+list-style-type: none; /* Elimina los puntos de la lista */
+padding: 0; /* Elimina el padding de la lista */
+}
+
+.header-list {
+margin: 0; /* Elimina el margen */
+}
+
+.data-list li {
+padding: 8px;
+margin-bottom: 5px; /* Espacio entre los elementos de la lista */
+}
+
+body {
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+  

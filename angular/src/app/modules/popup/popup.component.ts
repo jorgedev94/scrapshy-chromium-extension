@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common'
 import { Component, Inject, signal } from '@angular/core'
 import { TAB_ID } from 'src/app/app.config'
 import { Scrapshy } from '../../services/scrap.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-popup',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatGridListModule, MatButtonModule],
   templateUrl: 'popup.component.html',
   styleUrls: ['popup.component.scss'],
   providers: [Scrapshy]
@@ -25,7 +27,6 @@ export class PopupComponent {
       {
         target: { tabId: this.tabId },
         func: () => {
-          console.log(document)
           return this.sc.scrap_2(document);
         }
       },

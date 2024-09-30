@@ -1,12 +1,43 @@
-<h1>Popup</h1>
-<p>
-  You can easily send messages from the popup to the content page with the provided Tab ID! (tabId=<strong>{{
-    tabId
-  }}</strong
-  >)
-</p>
+<div class="container">
+  <div class="grid">
+    <!-- Fila 1 (header como lista) -->
+    <div class="grid-item header-item" colspan="2">
+      <ul class="header-list">
+        <li>Nombre Titular</li>
+        <li>Fecha Nacimiento</li>
+        <li>Social</li>
+        <li>Dirección</li>
+      </ul>
+    </div>
 
-<button (click)="onClick()">Click me to test</button>
+    <!-- Fila 2 que ocupa ambas columnas -->
+    <div class="grid-item data-container" colspan="2">
+      <div class="data-column">
+        <ul class="data-list">
+          <li>Familia</li>
+          <li>MP ID</li>
+          <li>ID Subscriber</li>
+          <li>Efectividad</li>
+          <li>Terminación</li>
+          <li>Estado</li>
+        </ul>
+      </div>
+      <div class="data-column">
+        <ul class="data-list">
+          <li>Valor Prima</li>
+          <li>Subsidio</li>
+          <li>Max Desembolso</li>
+          <li>Deducible</li>
+          <li>Plan ID</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fila 3 (con botón) -->
+      <button mat-raised-button>SCRAP</button>
+      <button mat-raised-button>COMPARE</button>
+  </div>
+</div>
 
 <p>
   <strong>{{ message() }}</strong>

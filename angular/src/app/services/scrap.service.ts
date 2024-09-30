@@ -18,7 +18,6 @@ export class Scrapshy {
 
     scrap_2(document) {
         function getSpanTexts(texts: string[]) {
-            console.log(document)
             const textConditions = texts.map((text) => `text()="${text}"`).join(' or ');
             const xpath = `//tr/td[span[${textConditions}]]/following-sibling::td/span`;
 
