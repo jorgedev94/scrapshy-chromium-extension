@@ -1,7 +1,8 @@
 :host {
     display: block;
-    width: 400px; /* Ancho deseado */
-    height: auto; /* Alto deseado */
-    overflow: auto; /* Para manejar el desbordamiento */
-    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+    min-width: 400px;
+    width: auto;
+    height: auto;
+    overflow: auto;
+    box-sizing: border-box;
 }
