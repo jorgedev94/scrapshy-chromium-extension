@@ -1,18 +1,22 @@
 import { Component, Inject, signal } from '@angular/core'
 import { TAB_ID } from 'src/app/app.config'
-import { Scrapshy } from 'src/app/services/scrap.service';
-import { HomeComponent } from 'src/app/pages/home/home.component';
-
+import { Scrapshy } from '../../services/scrap.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card'
 
 @Component({
-  selector: 'app-popup',
+  selector: 'pages-home',
   standalone: true,
-  imports: [HomeComponent],
-  templateUrl: 'popup.component.html',
-  styleUrls: ['popup.component.scss'],
+  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule],
+  templateUrl: 'home.component.html',
+  styleUrls: ['home.component.scss'],
   providers: [Scrapshy]
 })
-export class PopupComponent {
+export class HomeComponent {
   message = signal('')
   scrapper = signal('');
 
