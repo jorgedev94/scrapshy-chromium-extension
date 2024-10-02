@@ -1,43 +1,38 @@
-<div class="container">
-  <div class="grid">
-    <!-- Fila 1 (header como lista) -->
-    <div class="grid-item header-item" colspan="2">
-      <ul class="header-list">
-        <li>Nombre Titular</li>
-        <li>Fecha Nacimiento</li>
-        <li>Social</li>
-        <li>Dirección</li>
-      </ul>
-    </div>
+<mat-grid-list cols="2" rowHeight="120px">
+  <mat-grid-tile colspan="2" class="bd">
+    <mat-list>
+      <mat-list-item>Nombre titular</mat-list-item>
+      <mat-list-item>Fecha Nacimiento</mat-list-item>
+      <mat-list-item>SSN</mat-list-item>
+      <mat-list-item>Direccion</mat-list-item>
+    </mat-list>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="2" class="bd">
+    <mat-list>
+      <mat-list-item>Familia</mat-list-item>
+      <mat-list-item>MP ID:</mat-list-item>
+      <mat-list-item>ID Subscriber</mat-list-item>
+      <mat-list-item>Efectividad</mat-list-item>
+      <mat-list-item>Terminacion</mat-list-item>
+      <mat-list-item>Estado</mat-list-item>
+    </mat-list>
+    <mat-list>
+      <mat-list-item>Valor prima</mat-list-item>
+      <mat-list-item>Subsidio</mat-list-item>
+      <mat-list-item>Max Desembolso</mat-list-item>
+      <mat-list-item>Deducible</mat-list-item>
+      <mat-list-item>Plan ID</mat-list-item>
+    </mat-list>   
+  </mat-grid-tile>
+</mat-grid-list>
 
-    <!-- Fila 2 que ocupa ambas columnas -->
-    <div class="grid-item data-container" colspan="2">
-      <div class="data-column">
-        <ul class="data-list">
-          <li>Familia</li>
-          <li>MP ID</li>
-          <li>ID Subscriber</li>
-          <li>Efectividad</li>
-          <li>Terminación</li>
-          <li>Estado</li>
-        </ul>
-      </div>
-      <div class="data-column">
-        <ul class="data-list">
-          <li>Valor Prima</li>
-          <li>Subsidio</li>
-          <li>Max Desembolso</li>
-          <li>Deducible</li>
-          <li>Plan ID</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Fila 3 (con botón) -->
-      <button mat-raised-button>SCRAP</button>
-      <button mat-raised-button>COMPARE</button>
-  </div>
-</div>
+<!-- #docregion mat-menu-trigger-for -->
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+<!-- #enddocregion mat-menu-trigger-for -->
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
 
 <p>
   <strong>{{ message() }}</strong>
