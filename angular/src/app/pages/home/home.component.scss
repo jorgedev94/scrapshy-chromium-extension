@@ -1,3 +1,13 @@
+.example-card {
+    min-width: 600px;
+    height: auto;
+}
+  
+.example-header-image {
+    background-image: url('https://s3.amazonaws.com/healthsherpa_hcgov_files_prod/insurance_full/issuers/logos/000/000/460/original/data?1520274233');
+    background-size: cover;
+}
+
 mat-card {
     width: 100%;
     height: auto;
