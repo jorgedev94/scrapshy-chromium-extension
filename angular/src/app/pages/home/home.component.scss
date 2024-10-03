@@ -1,14 +1,39 @@
 .example-card {
-    min-width: 600px;
+    min-width: 700px;
     height: auto;
+    background: linear-gradient(lightblue,white 20%);
 }
   
-.example-header-image {
-    background-image: url('https://s3.amazonaws.com/healthsherpa_hcgov_files_prod/insurance_full/issuers/logos/000/000/460/original/data?1520274233');
-    background-size: cover;
+.full-img{
+    height: 100%;
+    width: 100%;
+}
+
+mat-card-header{
+    width: 30%;
 }
 
 mat-card {
     width: 100%;
     height: auto;
+}
+
+.btn{
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn > button{
+    background-color: gray;
+    color: white;
+}
+
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color: lightgreen;
 }
