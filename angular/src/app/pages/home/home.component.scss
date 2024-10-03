@@ -1,7 +1,7 @@
 .example-card {
     min-width: 700px;
     height: auto;
-    background: linear-gradient(20deg, lightblue, white);
+    background: linear-gradient(lightblue,white 20%);
 }
   
 .full-img{
@@ -28,11 +28,6 @@ mat-card {
     color: white;
 }
 
-.inc{
-    position: absolute;
-    top: 0;
-    left: 0;
-}
 
 a{
     text-decoration: none;
