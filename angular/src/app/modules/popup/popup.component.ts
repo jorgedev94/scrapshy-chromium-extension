@@ -26,7 +26,7 @@ export class PopupComponent {
       {
         target: { tabId: this.tabId },
         func: () => {
-          return this.sc.scrap_2(document);
+          return this.sc.scrap(this.tabId);
         }
       },
       (results) => {

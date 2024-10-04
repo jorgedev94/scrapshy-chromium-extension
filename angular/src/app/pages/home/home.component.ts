@@ -26,21 +26,10 @@ export class HomeComponent {
   ) {}
 
   onClick() {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: this.tabId },
-        func: () => {
-          return this.sc.scrap_2(document);
-        }
-      },
-      (results) => {
-        // Los resultados de la función inyectada se devuelven aquí
-        if (results && results[0]) {
-          console.log('Resultado del script:', results[0].result);
-          //this.message.set(results[0].result); // Actualiza la señal con el resultado
-        }
+    this.sc.scrap(this.tabId).then(
+      data => {
+        this.message.set(JSON.stringify(data))
       }
-    );
-
+    )
   }
 }
