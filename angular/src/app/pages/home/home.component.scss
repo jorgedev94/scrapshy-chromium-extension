@@ -7,6 +7,11 @@
     object-fit: contain;
 }
 
+button{
+    border-radius: 10px;
+    background-color: rgb(215, 238, 252) !important;
+}
+
 .ml-custom{
     padding: 2px !important;
 }
@@ -22,10 +27,6 @@ mat-list-item {
 
 .bg-custom{
     background-color: rgb(215, 238, 252);
-}
-
-.bg-custom-foot {
-    background-color: rgb(231, 231, 231);
 }
 
 .ref{
