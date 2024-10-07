@@ -1,39 +1,37 @@
-.example-card {
-    min-width: 700px;
-    height: auto;
-    background: linear-gradient(lightblue,white 20%);
-}
-  
-.full-img{
-    height: 100%;
-    width: 100%;
+.logo{
+    width: 8%;
 }
 
-mat-card-header{
-    width: 30%;
+.logo-1{
+    width: 20%;
+    object-fit: contain;
 }
 
-mat-card {
-    width: 100%;
-    height: auto;
+.ml-custom{
+    padding: 2px !important;
 }
 
-.btn{
-    display: flex;
-    justify-content: space-around;
+button > svg {
+    margin: 0 !important;
 }
 
-.btn > button{
-    background-color: gray;
-    color: white;
+mat-list-item {
+    height: auto !important;
+    margin: 0.4em;
 }
 
-
-a{
-    text-decoration: none;
-    color: black;
+.bg-custom{
+    background-color: rgb(215, 238, 252);
 }
 
-a:hover{
-    color: lightgreen;
+.bg-custom-foot {
+    background-color: rgb(231, 231, 231);
+}
+
+.ref{
+    font-size: 12px;
+}
+
+svg{
+    margin-right: 0.3em;
 }

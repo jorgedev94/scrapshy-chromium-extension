@@ -7,11 +7,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card'
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatIconModule} from '@angular/material/icon';
+
 
 @Component({
   selector: 'pages-home',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule],
+  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule],
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   providers: [Scrapshy]
@@ -19,6 +22,8 @@ import { MatCardModule } from '@angular/material/card'
 export class HomeComponent {
   message = signal('')
   scrapper = signal('');
+  readonly panelOpenState = signal(false);
+  readonly panelOpenState1 = signal(false);
 
   constructor(
     @Inject(TAB_ID) readonly tabId: number,
