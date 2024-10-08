@@ -9,11 +9,12 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card'
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'pages-home',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule],
+  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule],
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   providers: [Scrapshy]
@@ -56,9 +57,8 @@ export class HomeComponent {
 }
   
   scrapper = signal('');
-  panelOpenState = signal(false);
-  panelOpenState1 = signal(false);
   isSecondPanelOpen = false; // Estado del Panel 2
+  isThirdPanelOpen = false;
   isDisabled = signal(true)
 
   constructor(
@@ -109,6 +109,7 @@ export class HomeComponent {
       "phone" : "7865412356",
       "income" : "15000"
   }
+    this.generarFilas()
     return this.policy
   }
 
@@ -149,9 +150,16 @@ export class HomeComponent {
       "income" : ""
   }
   this.isSecondPanelOpen = false;
+  this.isThirdPanelOpen = false;
   this.isDisabled.set(true)
 
   return this.policy
   }
 
+  numeroDeFilas: number = 2; // Valor ingresado por el usuario
+  filas: number[] = []; // Array para almacenar las filas
+
+  generarFilas() {
+    this.filas = Array.from({ length: this.numeroDeFilas }, (_, index) => index + 1);
+  }
 }
