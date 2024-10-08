@@ -10,7 +10,6 @@ import { MatCardModule } from '@angular/material/card'
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 
-
 @Component({
   selector: 'pages-home',
   standalone: true,
@@ -20,25 +19,47 @@ import {MatIconModule} from '@angular/material/icon';
   providers: [Scrapshy]
 })
 export class HomeComponent {
-  //message = signal('')
   message = {
-    name : 'Santiago',
-    lastname : 'Moncada Peña',
-    dob : '10-19-2001',
-    ssn : '1193113161',
-    address : {
-      address : 'Villa verde',
-      city : 'Pereira',
-      county : 'Ri',
-      zipcode : '66000'
+    "contacts": [
+        {
+            "firstname" : "Jorge",
+            "lastname" : "Devia",
+            "dob" : "03/29/1994",
+            "ssn" : "000-54-5451",
+            "type": "owner"        
+        },
+        {
+            "firstname" : "Santiago",
+            "lastname" : "Moncada",
+            "dob" : "01/01/2000",
+            "ssn" : "547-58-4654",
+            "type": "spouse"        
+        },
+        {
+            "firstname" : "Karol",
+            "lastname" : "G",
+            "dob" : "01/01/2004",
+            "ssn" : "245-54-5945",
+            "type": "dependent_1"        
+        }
+    ],
+    "address" : {
+      "address" : "Avenida Siempre Viva",
+      "address_2": "Apt 201",
+      "city" : "Miami",
+      "state": "FL",
+      "zipcode" : "33054"
     },
-    email : 'Prueba@hotmail.com',
-    phone : '1234567890',
-    income : '15000'
-  }
+    "email" : "jorged94@mabecenter.org",
+    "phone" : "7865412356",
+    "income" : "15000"
+}
+  
   scrapper = signal('');
-  readonly panelOpenState = signal(false);
-  readonly panelOpenState1 = signal(false);
+  panelOpenState = signal(false);
+  panelOpenState1 = signal(false);
+  isSecondPanelOpen = false; // Estado del Panel 2
+  isDisabled = signal(true)
 
   constructor(
     @Inject(TAB_ID) readonly tabId: number,
@@ -50,10 +71,86 @@ export class HomeComponent {
   }
 
   onClick() {
-    this.sc.scrap(this.tabId).then(
-      data => {
-        this.message
-      }
-    )
+    this.isDisabled.set(false)
+
+    this.message = {
+      "contacts": [
+          {
+              "firstname" : "Jorge",
+              "lastname" : "Devia",
+              "dob" : "03/29/1994",
+              "ssn" : "000-54-5451",
+              "type": "owner"        
+          },
+          {
+              "firstname" : "Santiago",
+              "lastname" : "Moncada",
+              "dob" : "01/01/2000",
+              "ssn" : "547-58-4654",
+              "type": "spouse"        
+          },
+          {
+              "firstname" : "Karol",
+              "lastname" : "G",
+              "dob" : "01/01/2004",
+              "ssn" : "245-54-5945",
+              "type": "dependent_1"        
+          }
+      ],
+      "address" : {
+        "address" : "Avenida Siempre Viva",
+        "address_2": "Apt 201",
+        "city" : "Miami",
+        "state": "FL",
+        "zipcode" : "33054"
+      },
+      "email" : "jorged94@mabecenter.org",
+      "phone" : "7865412356",
+      "income" : "15000"
   }
+    return this.message
+  }
+
+  clean(){
+    this.message = {
+      "contacts": [
+          {
+              "firstname" : "",
+              "lastname" : "",
+              "dob" : "",
+              "ssn" : "",
+              "type": ""        
+          },
+          {
+              "firstname" : "Santiago",
+              "lastname" : "Moncada",
+              "dob" : "01/01/2000",
+              "ssn" : "547-58-4654",
+              "type": "spouse"        
+          },
+          {
+              "firstname" : "Karol",
+              "lastname" : "G",
+              "dob" : "01/01/2004",
+              "ssn" : "245-54-5945",
+              "type": "dependent_1"        
+          }
+      ],
+      "address" : {
+        "address" : "",
+        "address_2": "",
+        "city" : "",
+        "state": "",
+        "zipcode" : ""
+      },
+      "email" : "",
+      "phone" : "",
+      "income" : ""
+  }
+  this.isSecondPanelOpen = false;
+  this.isDisabled.set(true)
+
+  return this.message
+  }
+
 }
