@@ -73,43 +73,42 @@ export class HomeComponent {
 
   onClick() {
     this.isDisabled.set(false)
-
+    const object_json = this.sc.scrap(this.tabId)
     this.policy = {
-      "contacts": [
-          {
-            "firstname" : "Jorge",
-            "lastname" : "Devia",
-            "dob" : "03/29/1994",
-            "ssn" : "000-54-5451",
-            "type": "owner"        
-          },
-          {
-            "firstname" : "Santiago",
-            "lastname" : "Moncada",
-            "dob" : "01/01/2000",
-            "ssn" : "547-58-4654",
-            "type": "spouse"        
-          },
-          {
-            "firstname" : "Karol",
-            "lastname" : "G",
-            "dob" : "01/01/2004",
-            "ssn" : "245-54-5945",
-            "type": "dependent_1"        
-          }
-      ],
-      "address" : {
-        "address" : "Avenida Siempre Viva",
-        "address_2": "Apt 201",
-        "city" : "Miami",
-        "state": "FL",
-        "zipcode" : "33054"
-      },
-      "email" : "jorged94@mabecenter.org",
-      "phone" : "7865412356",
-      "income" : "15000"
-  }
-    this.generarFilas()
+        "contacts": [
+            {
+                "firstname" : "Jorge",
+                "lastname" : "Devia",
+                "dob" : "03/29/1994",
+                "ssn" : "000-54-5451",
+                "type": "owner"        
+            },
+            {
+                "firstname" : "Santiago",
+                "lastname" : "Moncada",
+                "dob" : "01/01/2000",
+                "ssn" : "547-58-4654",
+                "type": "spouse"        
+            },
+            {
+                "firstname" : "Karol",
+                "lastname" : "G",
+                "dob" : "01/01/2004",
+                "ssn" : "245-54-5945",
+                "type": "dependent_1"        
+            }
+        ],
+        "address" : {
+            "address" : "Avenida Siempre Viva",
+            "address_2": "Apt 201",
+            "city" : "Miami",
+            "state": "FL",
+            "zipcode" : "33054"
+        },
+        "email" : "jorged94@mabecenter.org",
+        "phone" : "7865412356",
+        "income" : "15000"
+    }
     return this.policy
   }
 
@@ -154,12 +153,5 @@ export class HomeComponent {
   this.isDisabled.set(true)
 
   return this.policy
-  }
-
-  numeroDeFilas: number = 2; // Valor ingresado por el usuario
-  filas: number[] = []; // Array para almacenar las filas
-
-  generarFilas() {
-    this.filas = Array.from({ length: this.numeroDeFilas }, (_, index) => index + 1);
-  }
+  }  
 }
