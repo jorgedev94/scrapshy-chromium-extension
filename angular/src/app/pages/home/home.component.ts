@@ -19,7 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
   providers: [Scrapshy]
 })
 export class HomeComponent {
-  message = {
+  policy = {
     "contacts": [
         {
             "firstname" : "Jorge",
@@ -69,32 +69,33 @@ export class HomeComponent {
   closeExtension(){
     window.close()
   }
+  
 
   onClick() {
     this.isDisabled.set(false)
 
-    this.message = {
+    this.policy = {
       "contacts": [
           {
-              "firstname" : "Jorge",
-              "lastname" : "Devia",
-              "dob" : "03/29/1994",
-              "ssn" : "000-54-5451",
-              "type": "owner"        
+            "firstname" : "Jorge",
+            "lastname" : "Devia",
+            "dob" : "03/29/1994",
+            "ssn" : "000-54-5451",
+            "type": "owner"        
           },
           {
-              "firstname" : "Santiago",
-              "lastname" : "Moncada",
-              "dob" : "01/01/2000",
-              "ssn" : "547-58-4654",
-              "type": "spouse"        
+            "firstname" : "Santiago",
+            "lastname" : "Moncada",
+            "dob" : "01/01/2000",
+            "ssn" : "547-58-4654",
+            "type": "spouse"        
           },
           {
-              "firstname" : "Karol",
-              "lastname" : "G",
-              "dob" : "01/01/2004",
-              "ssn" : "245-54-5945",
-              "type": "dependent_1"        
+            "firstname" : "Karol",
+            "lastname" : "G",
+            "dob" : "01/01/2004",
+            "ssn" : "245-54-5945",
+            "type": "dependent_1"        
           }
       ],
       "address" : {
@@ -108,11 +109,11 @@ export class HomeComponent {
       "phone" : "7865412356",
       "income" : "15000"
   }
-    return this.message
+    return this.policy
   }
 
   clean(){
-    this.message = {
+    this.policy = {
       "contacts": [
           {
               "firstname" : "",
@@ -150,7 +151,7 @@ export class HomeComponent {
   this.isSecondPanelOpen = false;
   this.isDisabled.set(true)
 
-  return this.message
+  return this.policy
   }
 
 }
