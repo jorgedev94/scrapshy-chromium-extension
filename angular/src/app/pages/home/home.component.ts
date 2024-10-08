@@ -20,7 +20,22 @@ import {MatIconModule} from '@angular/material/icon';
   providers: [Scrapshy]
 })
 export class HomeComponent {
-  message = signal('')
+  //message = signal('')
+  message = {
+    name : 'Santiago',
+    lastname : 'Moncada Peña',
+    dob : '10-19-2001',
+    ssn : '1193113161',
+    address : {
+      address : 'Villa verde',
+      city : 'Pereira',
+      county : 'Ri',
+      zipcode : '66000'
+    },
+    email : 'Prueba@hotmail.com',
+    phone : '1234567890',
+    income : '15000'
+  }
   scrapper = signal('');
   readonly panelOpenState = signal(false);
   readonly panelOpenState1 = signal(false);
@@ -30,10 +45,14 @@ export class HomeComponent {
     private sc: Scrapshy
   ) {}
 
+  closeExtension(){
+    window.close()
+  }
+
   onClick() {
     this.sc.scrap(this.tabId).then(
       data => {
-        this.message.set(JSON.stringify(data))
+        this.message
       }
     )
   }

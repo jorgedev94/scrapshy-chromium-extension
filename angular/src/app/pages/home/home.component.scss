@@ -1,10 +1,18 @@
 .logo{
-    width: 8%;
+    width: 3.5em;
 }
 
 .logo-1{
     width: 20%;
     object-fit: contain;
+}
+
+.options{
+    width: 200px;
+}
+
+.menu{
+    padding: 0 !important;
 }
 
 button{
@@ -25,12 +33,16 @@ mat-list-item {
     margin: 0.4em;
 }
 
+.svg{
+    cursor: pointer;
+}
+
 .bg-custom{
     background-color: rgb(215, 238, 252);
 }
 
 .ref{
-    font-size: 12px;
+    font-size: 15px;
 }
 
 .foot{
