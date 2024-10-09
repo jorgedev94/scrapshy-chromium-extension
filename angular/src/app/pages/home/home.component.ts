@@ -80,8 +80,8 @@ export class HomeComponent {
     this.policy = {
         "contacts": [
             {
-                "firstname" : 'Jorge',
-                "lastname" : "Devia",
+                "firstname" : (object_json.firstname+' '+object_json.middlename) || object_json.firstname,
+                "lastname" : object_json.lastname,
                 "dob" : "03/29/1994",
                 "ssn" : "000-54-5451",
                 "type": "owner"        
