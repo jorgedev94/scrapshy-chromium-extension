@@ -14,6 +14,8 @@ interface ScrapData {
   firstname: string;
   lastname: string;
   middlename: string;
+  owner_ssn: string;
+  owner_dob: string
 }
 
 @Injectable({
@@ -60,27 +62,31 @@ export class Scrapshy {
                                 const texts5 = ['Nro. de identificación de la póliza', 'Policy ID'];
                                 const texts6 = ['ID de FFM', 'FFM ID'];
 
-                                const elementValues = getSpanTexts(texts);
-                                const elementValues2 = getSpanTexts(texts2);
-                                const elementValues3 = getSpanTexts(texts3);
-                                const elementValues4 = getSpanTexts(texts4);
-                                const elementValues5 = getSpanTexts(texts5);
-                                const elementValues6 = getSpanTexts(texts6);
-                                const elementValues7 = document.querySelector('.css-1ahwws6').textContent.trim()                            
+                                const miembros = getSpanTexts(texts);
+                                const efectividad = getSpanTexts(texts2);
+                                const terminacion = getSpanTexts(texts3);
+                                const subscriber_id = getSpanTexts(texts4);
+                                const policy_id = getSpanTexts(texts5);
+                                const ffm_id = getSpanTexts(texts6);
+                                const owner_name = document.querySelector('.css-1ahwws6').textContent.trim()
+                                const table_depends = document.querySelectorAll('.table-module__greyHeader___wgjY5 tbody tr')
+                                const table_info = document.querySelectorAll('layouts-module__mb20___mUYnF tbody')                  
 
                                 let data = {                                    
-                                    miembros: elementValues,
-                                    efectividad: elementValues2,
-                                    terminacion: elementValues3,
-                                    subscriber_id: elementValues4,
-                                    policy_id: elementValues5,
-                                    ffm_id: elementValues6,
-                                    owner: elementValues7,         
+                                    miembros: miembros,
+                                    efectividad: efectividad,
+                                    terminacion: terminacion,
+                                    subscriber_id: subscriber_id,
+                                    policy_id: policy_id,
+                                    ffm_id: ffm_id,
+                                    owner: owner_name,         
                                     email: "example@example.com", // Añadir si es necesario
                                     phone: "123-456-7890",
                                     firstname: '',
                                     lastname: '',
-                                    middlename: ''
+                                    middlename: '',
+                                    owner_ssn: '',
+                                    owner_dob: ''
                                 };
 
                                 if (data) {
@@ -106,6 +112,19 @@ export class Scrapshy {
                                         const apellido = (nombreCompleto[1]+' '+nombreCompleto[2])
                                         data.lastname = apellido
                                     }
+
+                                    table_depends.forEach((fila) => {
+                                        const celdas = fila.querySelectorAll('td');
+                                        
+                                        // Verifica si hay celdas y si la primera celda contiene el nombre buscado
+                                        if (celdas.length > 0 && celdas[0].textContent.trim() === data.owner) {
+                                            // Supongamos que el SSN está en la segunda celda (índice 1)
+                                            const ssn = celdas[4].textContent.trim();
+                                            const dob = celdas[3].textContent.trim();
+                                            data.owner_ssn = ssn
+                                            data.owner_dob = dob
+                                        }
+                                    });
                                     
                                     data.owner = nombreCompleto[0]
                                     data.miembros = namesArray;

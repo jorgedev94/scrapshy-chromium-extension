@@ -82,8 +82,8 @@ export class HomeComponent {
             {
                 "firstname" : (object_json.firstname+' '+object_json.middlename) || object_json.firstname,
                 "lastname" : object_json.lastname,
-                "dob" : "03/29/1994",
-                "ssn" : "000-54-5451",
+                "dob" : object_json.owner_dob,
+                "ssn" : object_json.owner_ssn,
                 "type": "owner"        
             },
             {
