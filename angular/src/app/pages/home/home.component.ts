@@ -71,13 +71,16 @@ export class HomeComponent {
   }
   
 
-  onClick() {
+  async onClick() {
     this.isDisabled.set(false)
-    const object_json = this.sc.scrap(this.tabId)
+    
+    const object_json = await this.sc.scrap(this.tabId);
+    console.log(object_json)
+
     this.policy = {
         "contacts": [
             {
-                "firstname" : "Jorge",
+                "firstname" : 'Jorge',
                 "lastname" : "Devia",
                 "dob" : "03/29/1994",
                 "ssn" : "000-54-5451",

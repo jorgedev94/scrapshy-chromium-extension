@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
 
+interface ScrapData {
+  efectividad: string[];
+  miembros: string[];
+  policy_id: string[];
+  subscriber_id: string[];
+  terminacion: string[];
+  ffm_id: string[];
+  owner: string;
+  email?: string; // Opcional
+  phone?: string; // Opcional
+}
+
 @Injectable({
     providedIn: 'root',
 })
 export class Scrapshy {
     constructor() {}
 
-    scrap(tabId) {
+    scrap(tabId): Promise<ScrapData | null> {
         return new Promise((resolve) => {
             chrome.scripting.executeScript(
                 {
@@ -50,19 +62,23 @@ export class Scrapshy {
                                 const elementValues4 = getSpanTexts(texts4);
                                 const elementValues5 = getSpanTexts(texts5);
                                 const elementValues6 = getSpanTexts(texts6);
+                                const elementValues7 = document.querySelector('.css-1ahwws6').textContent.trim()
 
                                 let data = {
-                                    Miembros: elementValues,
-                                    Efectividad: elementValues2,
-                                    Terminacion: elementValues3,
-                                    Subscriber_id: elementValues4,
-                                    Policy_id: elementValues5,
+                                    miembros: elementValues,
+                                    efectividad: elementValues2,
+                                    terminacion: elementValues3,
+                                    subscriber_id: elementValues4,
+                                    policy_id: elementValues5,
                                     ffm_id: elementValues6,
+                                    owner: elementValues7,                                    
+                                    email: "example@example.com", // Añadir si es necesario
+                                    phone: "123-456-7890"
                                 };
 
                                 if (data) {
-                                    const namesArray = data.Miembros[0].split(',').map((name) => name.trim());
-                                    data.Miembros = namesArray;
+                                    const namesArray = data.miembros[0].split(',').map((name) => name.trim());
+                                    data.miembros = namesArray;
                                 }
                                 return data;
                             }
@@ -76,8 +92,8 @@ export class Scrapshy {
                             resolve(null); // Resuelve con null si hay un error
                         } else {
                             const spanText = results[0].result;
-                            console.log('Este es el resultado:' + JSON.stringify(spanText));
-                            resolve(spanText); // Resuelve con el resultado
+                            //console.log('Este es el resultado:' + JSON.stringify(spanText));
+                            resolve(spanText); // Resuelve con el resultado                            
                         }
                     },
                 )
