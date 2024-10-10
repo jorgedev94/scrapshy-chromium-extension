@@ -91,7 +91,15 @@ export class HomeComponent {
     this.isDisabled.set(false)
     
     const object_json = await this.sc.scrap(this.tabId);
-    console.log(object_json)    
+    console.log(object_json)
+
+    const countSubarraysWithNoAplica = (array: string[]): number => {
+        return array.filter(subarray => subarray.includes('No aplica')).length;
+      };
+      
+    const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
+    const family = object_json.miembros.length-cantidadConNoAplica
+
     this.policy = {
         "contacts": [
             {
@@ -131,7 +139,7 @@ export class HomeComponent {
           "terminacion": object_json.terminacion[0],
           "plan_id" : '',
           "max_desem" : object_json.max_desem,
-          "family" : '',
+          "family" : (object_json.miembros.length)+'x'+(family),
           "prima" : object_json.prima,
           "subsidio" : object_json.subsidio,
           "deducible" : object_json.deducible,
@@ -139,6 +147,8 @@ export class HomeComponent {
           "broker" : object_json.broker[0]
         }
     }
+
+    
     this.filas_content = object_json.miembros
     this.rows = object_json.rows
     return this.policy, this.rows
