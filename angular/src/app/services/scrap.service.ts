@@ -9,13 +9,15 @@ interface ScrapData {
   terminacion: string[];
   ffm_id: string[];
   owner: string;
-  email?: string; // Opcional
-  phone?: string; // Opcional
+  email: string[];
+  phone: string[];
+  address: string[];
   firstname: string;
   lastname: string;
   middlename: string;
   owner_ssn: string;
-  owner_dob: string
+  owner_dob: string;
+  status: string[];
 }
 
 @Injectable({
@@ -61,6 +63,10 @@ export class Scrapshy {
                                 const texts4 = ['ID de subscritor', 'Subscriber ID'];
                                 const texts5 = ['Nro. de identificación de la póliza', 'Policy ID'];
                                 const texts6 = ['ID de FFM', 'FFM ID'];
+                                const texts7 = ['Email']
+                                const texts8 = ['Phone']
+                                const texts9 = ['Address']
+                                const texts10 = ['Estado', 'Status']
 
                                 const miembros = getSpanTexts(texts);
                                 const efectividad = getSpanTexts(texts2);
@@ -70,7 +76,11 @@ export class Scrapshy {
                                 const ffm_id = getSpanTexts(texts6);
                                 const owner_name = document.querySelector('.css-1ahwws6').textContent.trim()
                                 const table_depends = document.querySelectorAll('.table-module__greyHeader___wgjY5 tbody tr')
-                                const table_info = document.querySelectorAll('layouts-module__mb20___mUYnF tbody')                  
+                                const table_info = document.querySelectorAll('layouts-module__mb20___mUYnF tbody')
+                                const email = getSpanTexts(texts7)
+                                const phone = getSpanTexts(texts8)
+                                const address = getSpanTexts(texts9)
+                                const status = getSpanTexts(texts10)
 
                                 let data = {                                    
                                     miembros: miembros,
@@ -80,17 +90,20 @@ export class Scrapshy {
                                     policy_id: policy_id,
                                     ffm_id: ffm_id,
                                     owner: owner_name,         
-                                    email: "example@example.com", // Añadir si es necesario
-                                    phone: "123-456-7890",
+                                    email: email, // Añadir si es necesario
+                                    phone: phone,
                                     firstname: '',
                                     lastname: '',
                                     middlename: '',
                                     owner_ssn: '',
-                                    owner_dob: ''
+                                    owner_dob: '',
+                                    address: address,
+                                    status: status
                                 };
 
                                 if (data) {
                                     const namesArray = data.miembros[0].split(',').map((name) => name.trim());
+                                    const addressArray = data.address[0].split(',').map((name) => name.trim());                            
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
                                     data.firstname = nombreCompleto[0]
@@ -128,6 +141,7 @@ export class Scrapshy {
                                     
                                     data.owner = nombreCompleto[0]
                                     data.miembros = namesArray;
+                                    data.address = addressArray;
                                 }
                                 return data;
                             }

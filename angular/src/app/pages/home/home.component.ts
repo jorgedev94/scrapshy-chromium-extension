@@ -46,7 +46,6 @@ export class HomeComponent {
     ],
     "address" : {
       "address" : "Avenida Siempre Viva",
-      "address_2": "Apt 201",
       "city" : "Miami",
       "state": "FL",
       "zipcode" : "33054"
@@ -102,14 +101,13 @@ export class HomeComponent {
             }
         ],
         "address" : {
-            "address" : "Avenida Siempre Viva",
-            "address_2": "Apt 201",
-            "city" : "Miami",
-            "state": "FL",
-            "zipcode" : "33054"
+            "address" : object_json.address[0],
+            "city" : object_json.address[1],
+            "state": object_json.address[2],
+            "zipcode" : object_json.address[3]
         },
-        "email" : "jorged94@mabecenter.org",
-        "phone" : "7865412356",
+        "email" : object_json.email[0],
+        "phone" : object_json.phone[0],
         "income" : "15000"
     }
     return this.policy
@@ -142,7 +140,6 @@ export class HomeComponent {
       ],
       "address" : {
         "address" : "",
-        "address_2": "",
         "city" : "",
         "state": "",
         "zipcode" : ""
