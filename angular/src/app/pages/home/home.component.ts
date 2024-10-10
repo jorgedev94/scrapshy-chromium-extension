@@ -56,17 +56,18 @@ export class HomeComponent {
         "phone" : "7865412356",
         "income" : "15000",
         "plan_info": {
-        "plan_name" : '',
-        "efectividad" : '',
-        "terminacion": '',
-        "plan_id" : '',
-        "max_desem" : '',
-        "family" : '',
-        "prima" : '',
-        "subsidio" : '',
-        "deducible" : '',
-        "mp_id" : '',
-        "broker" : ''
+            "plan_name" : '',
+            "efectividad" : '',
+            "terminacion": '',
+            "plan_id" : '',
+            "max_desem" : '',
+            "family" : '',
+            "prima" : '',
+            "subsidio" : '',
+            "deducible" : '',
+            "mp_id" : '',
+            "broker" : '',
+            "company": ''
         }
     }
   
@@ -134,17 +135,18 @@ export class HomeComponent {
         "phone" : object_json.phone[0],
         "income" : "15000",
         "plan_info": {
-          "plan_name" : object_json.plan_name,
-          "efectividad" : object_json.efectividad[0],
-          "terminacion": object_json.terminacion[0],
-          "plan_id" : '',
-          "max_desem" : object_json.max_desem,
-          "family" : (object_json.miembros.length)+'x'+(family),
-          "prima" : object_json.prima,
-          "subsidio" : object_json.subsidio,
-          "deducible" : object_json.deducible,
-          "mp_id" : object_json.ffm_id[0],
-          "broker" : object_json.broker[0]
+            "plan_name" : object_json.plan_name,
+            "efectividad" : object_json.efectividad[0],
+            "terminacion": object_json.terminacion[0],
+            "plan_id" : '',
+            "max_desem" : object_json.max_desem,
+            "family" : (object_json.miembros.length)+'x'+(family),
+            "prima" : object_json.prima,
+            "subsidio" : object_json.subsidio,
+            "deducible" : object_json.deducible,
+            "mp_id" : object_json.ffm_id[0],
+            "broker" : object_json.broker[0],
+            "company": object_json.company
         }
     }
 
@@ -199,7 +201,8 @@ export class HomeComponent {
             "subsidio" : '',
             "deducible" : '',
             "mp_id" : '',
-            "broker" : ''
+            "broker" : '',
+            "company": ''
         }
     }
     this.isSecondPanelOpen = false;
@@ -211,5 +214,5 @@ export class HomeComponent {
 
     get filasLimitadas() {
         return this.filas_content.slice(0, this.rows);
-      }
+    }
 }

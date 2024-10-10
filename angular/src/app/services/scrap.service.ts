@@ -24,7 +24,8 @@ interface ScrapData {
   subsidio: string;
   plan_name: string;
   miembros: string[];
-  rows: number
+  rows: number;
+  company: string
 }
 
 @Injectable({
@@ -87,6 +88,7 @@ export class Scrapshy {
                                 const prima = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong').textContent.trim()
                                 const deducible = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc span').textContent.trim()
                                 const max_desem = document.querySelector('.layouts-module__my15___zruiT span div .row div:nth-child(3) span').textContent.trim()
+                                const plan_name = document.querySelector('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div .layouts-module__pb0____S1ng span').textContent.trim()
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
@@ -114,9 +116,10 @@ export class Scrapshy {
                                     deducible: deducible,
                                     max_desem: max_desem,
                                     subsidio: '',
-                                    plan_name: '',
+                                    plan_name: plan_name,
                                     miembros: [''],
-                                    rows: 0
+                                    rows: 0,
+                                    company: ''
                                 };
 
                                 if (data) {
@@ -160,12 +163,12 @@ export class Scrapshy {
                                         const celdas = fila.querySelectorAll('td')
 
                                         if(celdas){
-                                            let plan_name = celdas[0].textContent.trim()
-                                            const planArray = plan_name.split(' ');
-                                            plan_name = (planArray[0]+' '+planArray[1]+' '+planArray[2]+' '+planArray[3]+' '+planArray[4])
+                                            let company = celdas[0].textContent.trim()
+                                            const planArray = company.split(' ');
+                                            company = planArray[0]
                                             const subsidio = celdas[2].textContent.trim()
                                             data.subsidio = subsidio                                            
-                                            data.plan_name = plan_name
+                                            data.company = company
                                         }
                                     })
 
