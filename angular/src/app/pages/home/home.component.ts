@@ -110,9 +110,17 @@ export class HomeComponent {
             if (lowerCaseCompany === 'aetna') {
                 image.src = 'assets/aetna.png';
             } else if (lowerCaseCompany === 'oscar') {
-                image.src = 'assets/oscar.png'; // Asegúrate de que esta imagen exista
-            } else {
-                image.src = 'assets/SCE.png'; // Imagen por defecto si el valor no coincide
+                image.src = 'assets/oscar.png'; 
+            } else if (lowerCaseCompany === 'ambetter') {
+                image.src = 'assets/Ambetter.png'; 
+            } else if (lowerCaseCompany === 'molina') {
+                image.src = 'assets/molina.png'; 
+            } else if (lowerCaseCompany === 'ambetter') {
+                image.src = 'assets/Ambetter.png'; 
+            } else if (lowerCaseCompany === 'blue') {
+                image.src = 'assets/bc bs.png'; 
+            } else if (lowerCaseCompany === 'florida') {
+                image.src = 'assets/florida blue.png'; 
             }
         }
     };
