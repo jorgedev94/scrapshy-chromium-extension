@@ -52,7 +52,20 @@ export class HomeComponent {
     },
     "email" : "jorged94@mabecenter.org",
     "phone" : "7865412356",
-    "income" : "15000"
+    "income" : "15000",
+    "plan_info": {
+      "plan_name" : '',
+      "efectividad" : '',
+      "terminacion": '',
+      "plan_id" : '',
+      "max_desem" : '',
+      "family" : '',
+      "prima" : '',
+      "subsidio" : '',
+      "deducible" : '',
+      "mp_id" : '',
+      "broker" : ''
+    }
 }
   
   scrapper = signal('');
@@ -108,7 +121,20 @@ export class HomeComponent {
         },
         "email" : object_json.email[0],
         "phone" : object_json.phone[0],
-        "income" : "15000"
+        "income" : "15000",
+        "plan_info": {
+          "plan_name" : object_json.plan_name,
+          "efectividad" : object_json.efectividad[0],
+          "terminacion": object_json.terminacion[0],
+          "plan_id" : '',
+          "max_desem" : object_json.max_desem,
+          "family" : '',
+          "prima" : object_json.prima,
+          "subsidio" : object_json.subsidio,
+          "deducible" : object_json.deducible,
+          "mp_id" : object_json.ffm_id[0],
+          "broker" : object_json.broker[0]
+        }
     }
     return this.policy
   }
@@ -146,7 +172,20 @@ export class HomeComponent {
       },
       "email" : "",
       "phone" : "",
-      "income" : ""
+      "income" : "",
+      "plan_info": {
+        "plan_name" : '',
+        "efectividad" : '',
+        "terminacion": '',
+        "plan_id" : '',
+        "max_desem" : '',
+        "family" : '',
+        "prima" : '',
+        "subsidio" : '',
+        "deducible" : '',
+        "mp_id" : '',
+        "broker" : ''
+      }
   }
   this.isSecondPanelOpen = false;
   this.isThirdPanelOpen = false;

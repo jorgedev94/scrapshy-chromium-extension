@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { last } from 'rxjs';
+import { last, max } from 'rxjs';
 
 interface ScrapData {
   efectividad: string[];
@@ -18,6 +18,12 @@ interface ScrapData {
   owner_ssn: string;
   owner_dob: string;
   status: string[];
+  broker: string;
+  prima: string;
+  deducible: string;
+  max_desem: string;
+  subsidio: string;
+  plan_name: string;
 }
 
 @Injectable({
@@ -67,6 +73,7 @@ export class Scrapshy {
                                 const texts8 = ['Phone']
                                 const texts9 = ['Address']
                                 const texts10 = ['Estado', 'Status']
+                                const texts11 = ['Agente registrado','Agent of Record']
 
                                 const miembros = getSpanTexts(texts);
                                 const efectividad = getSpanTexts(texts2);
@@ -76,11 +83,15 @@ export class Scrapshy {
                                 const ffm_id = getSpanTexts(texts6);
                                 const owner_name = document.querySelector('.css-1ahwws6').textContent.trim()
                                 const table_depends = document.querySelectorAll('.table-module__greyHeader___wgjY5 tbody tr')
-                                const table_info = document.querySelectorAll('layouts-module__mb20___mUYnF tbody')
+                                const table_subsidio = document.querySelectorAll('#aca-app-app-history table tbody tr')
+                                const prima = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong').textContent.trim()
+                                const deducible = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc span').textContent.trim()
+                                const max_desem = document.querySelector('.layouts-module__my15___zruiT span div .row div:nth-child(3) span').textContent.trim()
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
                                 const status = getSpanTexts(texts10)
+                                
 
                                 let data = {                                    
                                     miembros: miembros,
@@ -98,12 +109,18 @@ export class Scrapshy {
                                     owner_ssn: '',
                                     owner_dob: '',
                                     address: address,
-                                    status: status
+                                    status: status,
+                                    broker: '',
+                                    prima : prima,
+                                    deducible: deducible,
+                                    max_desem: max_desem,
+                                    subsidio: '',
+                                    plan_name: ''
                                 };
 
                                 if (data) {
                                     const namesArray = data.miembros[0].split(',').map((name) => name.trim());
-                                    const addressArray = data.address[0].split(',').map((name) => name.trim());                            
+                                    const addressArray = data.address[0].split(',').map((name) => name.trim());                                    
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
                                     data.firstname = nombreCompleto[0]
@@ -138,6 +155,21 @@ export class Scrapshy {
                                             data.owner_dob = dob
                                         }
                                     });
+
+                                    table_subsidio.forEach((fila) => {
+                                        const celdas = fila.querySelectorAll('td')
+
+                                        if(celdas){
+                                            let plan_name = celdas[0].textContent.trim()
+                                            const planArray = plan_name.split(' ');
+                                            plan_name = (planArray[0]+' '+planArray[1]+' '+planArray[2]+' '+planArray[3]+' '+planArray[4])
+                                            const subsidio = celdas[2].textContent.trim()
+                                            data.subsidio = subsidio                                            
+                                            data.plan_name = plan_name
+                                        }
+                                    })
+
+
                                     
                                     data.owner = nombreCompleto[0]
                                     data.miembros = namesArray;
