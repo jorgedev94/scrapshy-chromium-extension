@@ -100,6 +100,25 @@ export class HomeComponent {
       
     const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
     const family = object_json.miembros.length-cantidadConNoAplica
+    
+    const changeImage = (company: string): void => {
+        const image = document.getElementById('dynamicImage') as HTMLImageElement;
+    
+        if (image) {
+            const lowerCaseCompany = company.toLowerCase();
+    
+            if (lowerCaseCompany === 'aetna') {
+                image.src = 'assets/aetna.png';
+            } else if (lowerCaseCompany === 'oscar') {
+                image.src = 'assets/oscar.png'; // Asegúrate de que esta imagen exista
+            } else {
+                image.src = 'assets/SCE.png'; // Imagen por defecto si el valor no coincide
+            }
+        }
+    };
+    
+    changeImage(object_json.company);
+    
 
     this.policy = {
         "contacts": [
@@ -215,4 +234,6 @@ export class HomeComponent {
     get filasLimitadas() {
         return this.filas_content.slice(0, this.rows);
     }
+
+    
 }
