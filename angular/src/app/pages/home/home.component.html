@@ -94,13 +94,13 @@
                           </tr>
                         </thead>
                         <tbody class="text-center">
-                          <tr> <!-- *ngFor="let fila of filas; let i = index" -->
-                            <td >Santiago Moncada Peña</td>
-                            <td >Hombre</td>
-                            <td >No</td>
-                            <td >10-19-2001</td>
-                            <td >3161</td>
-                            <td >Si</td>                    
+                          <tr *ngFor="let fila of filasLimitadas; let i = index">
+                            <td>{{fila[0]}}</td>
+                            <td>{{fila[1]}}</td>
+                            <td>{{fila[2]}}</td>
+                            <td>{{fila[3]}}</td>
+                            <td>{{fila[4]}}</td>
+                            <td>{{fila[5]}}</td>                    
                           </tr>
                         </tbody>
                       </table>                    

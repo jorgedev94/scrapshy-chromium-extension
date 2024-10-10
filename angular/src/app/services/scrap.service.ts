@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { last, max } from 'rxjs';
 
 interface ScrapData {
   efectividad: string[];
-  miembros: string[];
+  aplicantes: string[];
   policy_id: string[];
   subscriber_id: string[];
   terminacion: string[];
@@ -24,6 +23,8 @@ interface ScrapData {
   max_desem: string;
   subsidio: string;
   plan_name: string;
+  miembros: string[];
+  rows: number
 }
 
 @Injectable({
@@ -73,9 +74,8 @@ export class Scrapshy {
                                 const texts8 = ['Phone']
                                 const texts9 = ['Address']
                                 const texts10 = ['Estado', 'Status']
-                                const texts11 = ['Agente registrado','Agent of Record']
 
-                                const miembros = getSpanTexts(texts);
+                                const aplicantes = getSpanTexts(texts);
                                 const efectividad = getSpanTexts(texts2);
                                 const terminacion = getSpanTexts(texts3);
                                 const subscriber_id = getSpanTexts(texts4);
@@ -90,11 +90,10 @@ export class Scrapshy {
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
-                                const status = getSpanTexts(texts10)
-                                
+                                const status = getSpanTexts(texts10)                                
 
                                 let data = {                                    
-                                    miembros: miembros,
+                                    aplicantes: aplicantes,
                                     efectividad: efectividad,
                                     terminacion: terminacion,
                                     subscriber_id: subscriber_id,
@@ -115,11 +114,13 @@ export class Scrapshy {
                                     deducible: deducible,
                                     max_desem: max_desem,
                                     subsidio: '',
-                                    plan_name: ''
+                                    plan_name: '',
+                                    miembros: [''],
+                                    rows: 0
                                 };
 
                                 if (data) {
-                                    const namesArray = data.miembros[0].split(',').map((name) => name.trim());
+                                    const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
                                     const addressArray = data.address[0].split(',').map((name) => name.trim());                                    
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
@@ -144,8 +145,7 @@ export class Scrapshy {
                                     }
 
                                     table_depends.forEach((fila) => {
-                                        const celdas = fila.querySelectorAll('td');
-                                        
+                                        const celdas = fila.querySelectorAll('td');                                                                            
                                         // Verifica si hay celdas y si la primera celda contiene el nombre buscado
                                         if (celdas.length > 0 && celdas[0].textContent.trim() === data.owner) {
                                             // Supongamos que el SSN está en la segunda celda (índice 1)
@@ -169,10 +169,23 @@ export class Scrapshy {
                                         }
                                     })
 
+                                    const tabla = document.querySelector('.table-module__greyHeader___wgjY5');
+                                    const filas = tabla.querySelectorAll('tbody tr');
+
+                                    const datos = [];
+
+                                    filas.forEach(fila => {
+                                        const celdas = fila.querySelectorAll('td');
+                                        const valores = Array.from(celdas).map(celda => celda.textContent.trim());
+                                        datos.push(valores);
+                                        data.miembros = datos;
+                                        data.rows = datos.length
+                                    });
+
 
                                     
                                     data.owner = nombreCompleto[0]
-                                    data.miembros = namesArray;
+                                    data.aplicantes = namesArray;
                                     data.address = addressArray;
                                 }
                                 return data;

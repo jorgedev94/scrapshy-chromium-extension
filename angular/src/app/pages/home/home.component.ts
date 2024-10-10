@@ -20,75 +20,78 @@ import { FormsModule } from '@angular/forms';
   providers: [Scrapshy]
 })
 export class HomeComponent {
-  policy = {
-    "contacts": [
-        {
-            "firstname" : "Jorge",
-            "lastname" : "Devia",
-            "dob" : "03/29/1994",
-            "ssn" : "000-54-5451",
-            "type": "owner"        
+
+
+    policy = {
+        "contacts": [
+            {
+                "firstname" : "Jorge",
+                "lastname" : "Devia",
+                "dob" : "03/29/1994",
+                "ssn" : "000-54-5451",
+                "type": "owner"        
+            },
+            {
+                "firstname" : "Santiago",
+                "lastname" : "Moncada",
+                "dob" : "01/01/2000",
+                "ssn" : "547-58-4654",
+                "type": "spouse"        
+            },
+            {
+                "firstname" : "Karol",
+                "lastname" : "G",
+                "dob" : "01/01/2004",
+                "ssn" : "245-54-5945",
+                "type": "dependent_1"        
+            }
+        ],
+        "address" : {
+        "address" : "Avenida Siempre Viva",
+        "city" : "Miami",
+        "state": "FL",
+        "zipcode" : "33054"
         },
-        {
-            "firstname" : "Santiago",
-            "lastname" : "Moncada",
-            "dob" : "01/01/2000",
-            "ssn" : "547-58-4654",
-            "type": "spouse"        
-        },
-        {
-            "firstname" : "Karol",
-            "lastname" : "G",
-            "dob" : "01/01/2004",
-            "ssn" : "245-54-5945",
-            "type": "dependent_1"        
+        "email" : "jorged94@mabecenter.org",
+        "phone" : "7865412356",
+        "income" : "15000",
+        "plan_info": {
+        "plan_name" : '',
+        "efectividad" : '',
+        "terminacion": '',
+        "plan_id" : '',
+        "max_desem" : '',
+        "family" : '',
+        "prima" : '',
+        "subsidio" : '',
+        "deducible" : '',
+        "mp_id" : '',
+        "broker" : ''
         }
-    ],
-    "address" : {
-      "address" : "Avenida Siempre Viva",
-      "city" : "Miami",
-      "state": "FL",
-      "zipcode" : "33054"
-    },
-    "email" : "jorged94@mabecenter.org",
-    "phone" : "7865412356",
-    "income" : "15000",
-    "plan_info": {
-      "plan_name" : '',
-      "efectividad" : '',
-      "terminacion": '',
-      "plan_id" : '',
-      "max_desem" : '',
-      "family" : '',
-      "prima" : '',
-      "subsidio" : '',
-      "deducible" : '',
-      "mp_id" : '',
-      "broker" : ''
     }
-}
   
-  scrapper = signal('');
-  isSecondPanelOpen = false; // Estado del Panel 2
-  isThirdPanelOpen = false;
-  isDisabled = signal(true)
+    scrapper = signal('');
+    isSecondPanelOpen = false; // Estado del Panel 2
+    isThirdPanelOpen = false;
+    isDisabled = signal(true);
+    filas_content: any[] = []
+    rows: number = 0
 
-  constructor(
-    @Inject(TAB_ID) readonly tabId: number,
-    private sc: Scrapshy
-  ) {}
+    constructor(
+        @Inject(TAB_ID) readonly tabId: number,
+        private sc: Scrapshy
+    ) {}
 
-  closeExtension(){
-    window.close()
-  }
-  
+    closeExtension(){
+        window.close()
+    }
+    
 
-  async onClick() {
+    async onClick() {
     this.isDisabled.set(false)
     
     const object_json = await this.sc.scrap(this.tabId);
-    console.log(object_json)
-
+    console.log(object_json)    
     this.policy = {
         "contacts": [
             {
@@ -136,61 +139,67 @@ export class HomeComponent {
           "broker" : object_json.broker[0]
         }
     }
-    return this.policy
-  }
+    this.filas_content = object_json.miembros
+    this.rows = object_json.rows
+    return this.policy, this.rows
+    }
 
-  clean(){
+    clean(){
     this.policy = {
-      "contacts": [
-          {
-              "firstname" : "",
-              "lastname" : "",
-              "dob" : "",
-              "ssn" : "",
-              "type": ""        
-          },
-          {
-              "firstname" : "Santiago",
-              "lastname" : "Moncada",
-              "dob" : "01/01/2000",
-              "ssn" : "547-58-4654",
-              "type": "spouse"        
-          },
-          {
-              "firstname" : "Karol",
-              "lastname" : "G",
-              "dob" : "01/01/2004",
-              "ssn" : "245-54-5945",
-              "type": "dependent_1"        
-          }
-      ],
-      "address" : {
-        "address" : "",
-        "city" : "",
-        "state": "",
-        "zipcode" : ""
-      },
-      "email" : "",
-      "phone" : "",
-      "income" : "",
-      "plan_info": {
-        "plan_name" : '',
-        "efectividad" : '',
-        "terminacion": '',
-        "plan_id" : '',
-        "max_desem" : '',
-        "family" : '',
-        "prima" : '',
-        "subsidio" : '',
-        "deducible" : '',
-        "mp_id" : '',
-        "broker" : ''
-      }
-  }
-  this.isSecondPanelOpen = false;
-  this.isThirdPanelOpen = false;
-  this.isDisabled.set(true)
+        "contacts": [
+            {
+                "firstname" : "",
+                "lastname" : "",
+                "dob" : "",
+                "ssn" : "",
+                "type": ""        
+            },
+            {
+                "firstname" : "Santiago",
+                "lastname" : "Moncada",
+                "dob" : "01/01/2000",
+                "ssn" : "547-58-4654",
+                "type": "spouse"        
+            },
+            {
+                "firstname" : "Karol",
+                "lastname" : "G",
+                "dob" : "01/01/2004",
+                "ssn" : "245-54-5945",
+                "type": "dependent_1"        
+            }
+        ],
+        "address" : {
+            "address" : "",
+            "city" : "",
+            "state": "",
+            "zipcode" : ""
+        },
+        "email" : "",
+        "phone" : "",
+        "income" : "",
+        "plan_info": {
+            "plan_name" : '',
+            "efectividad" : '',
+            "terminacion": '',
+            "plan_id" : '',
+            "max_desem" : '',
+            "family" : '',
+            "prima" : '',
+            "subsidio" : '',
+            "deducible" : '',
+            "mp_id" : '',
+            "broker" : ''
+        }
+    }
+    this.isSecondPanelOpen = false;
+    this.isThirdPanelOpen = false;
+    this.isDisabled.set(true)
 
-  return this.policy
-  }  
+    return this.policy
+    }
+
+    get filasLimitadas() {
+        return this.filas_content.slice(0, this.rows);
+      }
 }
