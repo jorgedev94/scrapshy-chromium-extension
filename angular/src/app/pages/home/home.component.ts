@@ -69,7 +69,8 @@ export class HomeComponent {
             "mp_id" : '',
             "broker" : '',
             "company": '',
-            "sub_id" : []
+            "sub_id" : [],
+            "aplicantes": []
         }
     }
   
@@ -92,99 +93,96 @@ export class HomeComponent {
     
 
     async onClick() {
-    this.isDisabled.set(false)
-    
-    const object_json = await this.sc.scrap(this.tabId);
-    console.log(object_json)
+        this.isDisabled.set(false)
+        
+        const object_json = await this.sc.scrap(this.tabId);
+        console.log(object_json)
 
-    const countSubarraysWithNoAplica = (array: string[]): number => {
-        return array.filter(subarray => subarray.includes('No aplica')).length;
-    };    
+        const countSubarraysWithNoAplica = (array: string[]): number => {
+            return array.filter(subarray => subarray.includes('No aplica')).length;
+        };    
+        const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
+        const family = object_json.miembros.length-cantidadConNoAplica        
 
-    const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
-    const family = object_json.miembros.length-cantidadConNoAplica        
-
-    const changeImage = (company: string): void => {
-        const image = document.getElementById('dynamicImage') as HTMLImageElement;
-    
-        if (image) {
-            const lowerCaseCompany = company.toLowerCase();
-    
-            if (lowerCaseCompany === 'aetna') {
-                image.src = 'assets/aetna.png';
-            } else if (lowerCaseCompany === 'oscar') {
-                image.src = 'assets/oscar.png'; 
-            } else if (lowerCaseCompany === 'ambetter') {
-                image.src = 'assets/Ambetter.png'; 
-            } else if (lowerCaseCompany === 'molina') {
-                image.src = 'assets/molina.png'; 
-            } else if (lowerCaseCompany === 'ambetter') {
-                image.src = 'assets/Ambetter.png'; 
-            } else if (lowerCaseCompany === 'blue') {
-                image.src = 'assets/bc bs.png'; 
-            } else if (lowerCaseCompany === 'florida') {
-                image.src = 'assets/florida blue.png'; 
+        const changeImage = (company: string): void => {
+            const image = document.getElementById('dynamicImage') as HTMLImageElement;        
+            if (image) {
+                const lowerCaseCompany = company.toLowerCase();
+        
+                if (lowerCaseCompany === 'aetna') {
+                    image.src = 'assets/aetna.png';
+                } else if (lowerCaseCompany === 'oscar') {
+                    image.src = 'assets/oscar.png'; 
+                } else if (lowerCaseCompany === 'ambetter') {
+                    image.src = 'assets/Ambetter.png'; 
+                } else if (lowerCaseCompany === 'molina') {
+                    image.src = 'assets/molina.png'; 
+                } else if (lowerCaseCompany === 'ambetter') {
+                    image.src = 'assets/Ambetter.png'; 
+                } else if (lowerCaseCompany === 'blue') {
+                    image.src = 'assets/bc bs.png'; 
+                } else if (lowerCaseCompany === 'florida') {
+                    image.src = 'assets/florida blue.png'; 
+                }
             }
-        }
-    };
-    
-    changeImage(object_json.company);
-    
+        };
+        changeImage(object_json.company);    
 
-    this.policy = {
-        "contacts": [
-            {
-                "firstname" : (object_json.firstname+' '+object_json.middlename) || object_json.firstname,
-                "lastname" : object_json.lastname,
-                "dob" : object_json.owner_dob,
-                "ssn" : object_json.owner_ssn,
-                "type": "owner"        
+        this.policy = {
+            "contacts": [
+                {
+                    "firstname" : (object_json.firstname+' '+object_json.middlename) || object_json.firstname,
+                    "lastname" : object_json.lastname,
+                    "dob" : object_json.owner_dob,
+                    "ssn" : object_json.owner_ssn,
+                    "type": "owner"        
+                },
+                {
+                    "firstname" : "Santiago",
+                    "lastname" : "Moncada",
+                    "dob" : "01/01/2000",
+                    "ssn" : "547-58-4654",
+                    "type": "spouse"        
+                },
+                {
+                    "firstname" : "Karol",
+                    "lastname" : "G",
+                    "dob" : "01/01/2004",
+                    "ssn" : "245-54-5945",
+                    "type": "dependent_1"        
+                }
+            ],
+            "address" : {
+                "address" : object_json.address[0],
+                "city" : object_json.address[1],
+                "state": object_json.address[2],
+                "zipcode" : object_json.address[3]
             },
-            {
-                "firstname" : "Santiago",
-                "lastname" : "Moncada",
-                "dob" : "01/01/2000",
-                "ssn" : "547-58-4654",
-                "type": "spouse"        
-            },
-            {
-                "firstname" : "Karol",
-                "lastname" : "G",
-                "dob" : "01/01/2004",
-                "ssn" : "245-54-5945",
-                "type": "dependent_1"        
+            "email" : object_json.email[0],
+            "phone" : object_json.phone[0],
+            "income" : "15000",
+            "plan_info": {
+                "plan_name" : object_json.plan_name,
+                "efectividad" : object_json.efectividad,
+                "terminacion": object_json.terminacion,
+                "plan_id" : '',
+                "max_desem" : object_json.max_desem,
+                "family" : (object_json.miembros.length)+'x'+(family),
+                "prima" : object_json.prima,
+                "subsidio" : object_json.subsidio,
+                "deducible" : object_json.deducible,
+                "mp_id" : object_json.ffm_id[0],
+                "broker" : object_json.broker[0],
+                "company": object_json.company,
+                "sub_id": object_json.subscriber_id,
+                "aplicantes" : object_json.aplicantes
             }
-        ],
-        "address" : {
-            "address" : object_json.address[0],
-            "city" : object_json.address[1],
-            "state": object_json.address[2],
-            "zipcode" : object_json.address[3]
-        },
-        "email" : object_json.email[0],
-        "phone" : object_json.phone[0],
-        "income" : "15000",
-        "plan_info": {
-            "plan_name" : object_json.plan_name,
-            "efectividad" : object_json.efectividad,
-            "terminacion": object_json.terminacion,
-            "plan_id" : '',
-            "max_desem" : object_json.max_desem,
-            "family" : (object_json.miembros.length)+'x'+(family),
-            "prima" : object_json.prima,
-            "subsidio" : object_json.subsidio,
-            "deducible" : object_json.deducible,
-            "mp_id" : object_json.ffm_id[0],
-            "broker" : object_json.broker[0],
-            "company": object_json.company,
-            "sub_id": object_json.subscriber_id
-        }
-    }
-    
-    this.tabs = object_json.efectividad.length
-    this.filas_content = object_json.miembros
-    this.rows = object_json.rows
-    return this.policy, this.rows
+        }                
+
+        this.tabs = object_json.efectividad.length
+        this.filas_content = object_json.miembros
+        this.rows = object_json.rows
+        return this.policy, this.rows
     }
 
     clean(){
@@ -234,7 +232,8 @@ export class HomeComponent {
             "mp_id" : '',
             "broker" : '',
             "company": '',
-            "sub_id" : []
+            "sub_id" : [],
+            "aplicantes" : []
         }
     }
     this.isSecondPanelOpen = false;

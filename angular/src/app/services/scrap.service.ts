@@ -192,9 +192,7 @@ export class Scrapshy {
                                         datos.push(valores);
                                         data.miembros = datos;
                                         data.rows = datos.length
-                                    });
-
-
+                                    });                                    
                                     
                                     data.owner = nombreCompleto[0]
                                     //data.aplicantes = namesArray;
