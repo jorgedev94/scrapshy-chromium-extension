@@ -19,7 +19,7 @@ interface ScrapData {
   status: string[];
   broker: string;
   deducible: string[];
-  max_desem: string;
+  max_desem: string[];
   subsidio: string;
   plan_name: string;
   miembros: string[];
@@ -84,18 +84,22 @@ export class Scrapshy {
                                 const ffm_id = getSpanTexts(texts6);
                                 const owner_name = document.querySelector('.css-1ahwws6').textContent.trim()
                                 const table_depends = document.querySelectorAll('.table-module__greyHeader___wgjY5 tbody tr')
-                                const table_subsidio = document.querySelectorAll('#aca-app-app-history table tbody tr')                                
+                                const table_subsidio = document.querySelectorAll('#aca-app-app-history table tbody tr')     
+
                                 const deducibles = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc span');
                                 const deducible = Array.from(deducibles).map(el => el.textContent.trim());
-                                const max_desem = document.querySelector('.layouts-module__my15___zruiT span div .row div:nth-child(3) span').textContent.trim()
+
+                                const max_desembolsos = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div:nth-child(3) .typography-module__avenir20___P6Onc');
+                                const max_desem = Array.from(max_desembolsos).map(el => el.textContent.trim());
+
                                 const plan_name = document.querySelector('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div .layouts-module__pb0____S1ng span').textContent.trim()
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
                                 const status = getSpanTexts(texts10)   
                                 
-                                const elements = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong');
-                                const prima = Array.from(elements).map(el => el.textContent.trim());
+                                const primas = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong');
+                                const prima = Array.from(primas).map(el => el.textContent.trim());
 
                                 let data = {                                    
                                     aplicantes: aplicantes,
