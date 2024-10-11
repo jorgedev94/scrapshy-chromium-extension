@@ -63,9 +63,9 @@ export class HomeComponent {
             "plan_id" : '',
             "max_desem" : '',
             "family" : '',
-            "prima" : '',
+            "prima" : [],
             "subsidio" : '',
-            "deducible" : '',
+            "deducible" : [],
             "mp_id" : '',
             "broker" : '',
             "company": ''
@@ -226,9 +226,9 @@ export class HomeComponent {
             "plan_id" : '',
             "max_desem" : '',
             "family" : '',
-            "prima" : '',
+            "prima" : [],
             "subsidio" : '',
-            "deducible" : '',
+            "deducible" : [],
             "mp_id" : '',
             "broker" : '',
             "company": ''

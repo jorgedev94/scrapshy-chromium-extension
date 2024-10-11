@@ -18,14 +18,14 @@ interface ScrapData {
   owner_dob: string;
   status: string[];
   broker: string;
-  prima: string;
-  deducible: string;
+  deducible: string[];
   max_desem: string;
   subsidio: string;
   plan_name: string;
   miembros: string[];
   rows: number;
-  company: string
+  company: string;
+  prima: string[]
 }
 
 @Injectable({
@@ -84,15 +84,18 @@ export class Scrapshy {
                                 const ffm_id = getSpanTexts(texts6);
                                 const owner_name = document.querySelector('.css-1ahwws6').textContent.trim()
                                 const table_depends = document.querySelectorAll('.table-module__greyHeader___wgjY5 tbody tr')
-                                const table_subsidio = document.querySelectorAll('#aca-app-app-history table tbody tr')
-                                const prima = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong').textContent.trim()
-                                const deducible = document.querySelector('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc span').textContent.trim()
+                                const table_subsidio = document.querySelectorAll('#aca-app-app-history table tbody tr')                                
+                                const deducibles = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc span');
+                                const deducible = Array.from(deducibles).map(el => el.textContent.trim());
                                 const max_desem = document.querySelector('.layouts-module__my15___zruiT span div .row div:nth-child(3) span').textContent.trim()
                                 const plan_name = document.querySelector('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div .layouts-module__pb0____S1ng span').textContent.trim()
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
-                                const status = getSpanTexts(texts10)                                
+                                const status = getSpanTexts(texts10)   
+                                
+                                const elements = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong');
+                                const prima = Array.from(elements).map(el => el.textContent.trim());
 
                                 let data = {                                    
                                     aplicantes: aplicantes,
@@ -117,9 +120,9 @@ export class Scrapshy {
                                     max_desem: max_desem,
                                     subsidio: '',
                                     plan_name: plan_name,
-                                    miembros: [''],
+                                    miembros: [],
                                     rows: 0,
-                                    company: ''
+                                    company: '',
                                 };
 
                                 if (data) {
