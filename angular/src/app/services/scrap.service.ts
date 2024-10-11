@@ -148,7 +148,7 @@ export class Scrapshy {
                                             const apellido = nombreCompleto[2]
                                             data.lastname = apellido
                                         }
-                                    }else if(cantidadnombres>0 && cantidadnombres<2){
+                                    }else if(cantidadnombres>0 && cantidadnombres<=2){
                                         const apellido = nombreCompleto[1]
                                         data.lastname = apellido
                                     }else{

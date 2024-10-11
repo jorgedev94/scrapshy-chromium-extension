@@ -68,7 +68,8 @@ export class HomeComponent {
             "deducible" : [],
             "mp_id" : '',
             "broker" : '',
-            "company": ''
+            "company": '',
+            "sub_id" : []
         }
     }
   
@@ -175,7 +176,8 @@ export class HomeComponent {
             "deducible" : object_json.deducible,
             "mp_id" : object_json.ffm_id[0],
             "broker" : object_json.broker[0],
-            "company": object_json.company
+            "company": object_json.company,
+            "sub_id": object_json.subscriber_id
         }
     }
     
@@ -231,7 +233,8 @@ export class HomeComponent {
             "deducible" : [],
             "mp_id" : '',
             "broker" : '',
-            "company": ''
+            "company": '',
+            "sub_id" : []
         }
     }
     this.isSecondPanelOpen = false;

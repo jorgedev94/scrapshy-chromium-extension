@@ -122,7 +122,7 @@
                               <div class="row g-0 " style="border-radius: 10px;">
                                 <div class="card-header" style="background: ghostwhite !important">
                                   <div class="d-flex justify-content-between">
-                                    <strong>{{policy.plan_info.plan_name[i]}}</strong>
+                                    <strong><small>{{policy.plan_info.plan_name[i]}}</small></strong>
                                     <div>
                                       <span id="efectividad"><small>{{policy.plan_info.efectividad[i]}} - {{policy.plan_info.terminacion[i]}}</small></span>
                                     </div>                                  
@@ -135,7 +135,7 @@
                                   <div class="card-body text-center">                                
                                     <div class="card-text d-flex justify-content-around">
                                       <mat-list>
-                                        <mat-list-item><span style="font-size: 12px;"><strong>Plan ID:</strong> </span><span title="Plan id" id="plan_id"> 1234567890</span></mat-list-item>
+                                        <mat-list-item><span style="font-size: 12px;"><strong>Subscriber ID:</strong> </span><span title="Plan id" id="plan_id"> {{policy.plan_info.sub_id[i]}}</span></mat-list-item>
                                         <mat-list-item><span style="font-size: 12px;"><strong>Subsidio: </strong> </span><span title="Subsidio" id="subsidio"> {{policy.plan_info.subsidio}}</span></mat-list-item>
                                         <mat-list-item><span style="font-size: 12px;"><strong>Family:</strong> </span><span title="Familia" id="family"> {{policy.plan_info.family}}</span></mat-list-item>
                                       </mat-list>
