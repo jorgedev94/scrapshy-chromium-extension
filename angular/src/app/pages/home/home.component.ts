@@ -57,7 +57,7 @@ export class HomeComponent {
         "phone" : "7865412356",
         "income" : "15000",
         "plan_info": {
-            "plan_name" : '',
+            "plan_name" : [],
             "efectividad" : [],
             "terminacion": [],
             "plan_id" : '',
@@ -220,7 +220,7 @@ export class HomeComponent {
         "phone" : "",
         "income" : "",
         "plan_info": {
-            "plan_name" : '',
+            "plan_name" : [],
             "efectividad" : [],
             "terminacion": [],
             "plan_id" : '',

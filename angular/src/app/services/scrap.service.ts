@@ -21,7 +21,7 @@ interface ScrapData {
   deducible: string[];
   max_desem: string[];
   subsidio: string;
-  plan_name: string;
+  plan_name: string[];
   miembros: string[];
   rows: number;
   company: string;
@@ -92,7 +92,9 @@ export class Scrapshy {
                                 const max_desembolsos = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div:nth-child(3) .typography-module__avenir20___P6Onc');
                                 const max_desem = Array.from(max_desembolsos).map(el => el.textContent.trim());
 
-                                const plan_name = document.querySelector('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div .layouts-module__pb0____S1ng span').textContent.trim()
+                                const plan_names = document.querySelectorAll('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div .layouts-module__pb0____S1ng span')
+                                const plan_name = Array.from(plan_names).map(el => el.textContent.trim());
+
                                 const email = getSpanTexts(texts7)
                                 const phone = getSpanTexts(texts8)
                                 const address = getSpanTexts(texts9)
