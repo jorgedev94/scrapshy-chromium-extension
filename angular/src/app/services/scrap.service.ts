@@ -123,7 +123,7 @@ export class Scrapshy {
                                 };
 
                                 if (data) {
-                                    const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
+                                    //const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
                                     const addressArray = data.address[0].split(',').map((name) => name.trim());                                    
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
@@ -188,7 +188,7 @@ export class Scrapshy {
 
                                     
                                     data.owner = nombreCompleto[0]
-                                    data.aplicantes = namesArray;
+                                    //data.aplicantes = namesArray;
                                     data.address = addressArray;
                                 }
                                 return data;

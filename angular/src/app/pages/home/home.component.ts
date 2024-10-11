@@ -10,11 +10,12 @@ import { MatCardModule } from '@angular/material/card'
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @Component({
   selector: 'pages-home',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule],
+  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule,MatTabsModule],
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   providers: [Scrapshy]
@@ -57,8 +58,8 @@ export class HomeComponent {
         "income" : "15000",
         "plan_info": {
             "plan_name" : '',
-            "efectividad" : '',
-            "terminacion": '',
+            "efectividad" : [],
+            "terminacion": [],
             "plan_id" : '',
             "max_desem" : '',
             "family" : '',
@@ -77,6 +78,7 @@ export class HomeComponent {
     isDisabled = signal(true);
     filas_content: any[] = []
     rows: number = 0
+    tabs: number = 5;
 
     constructor(
         @Inject(TAB_ID) readonly tabId: number,
@@ -96,11 +98,11 @@ export class HomeComponent {
 
     const countSubarraysWithNoAplica = (array: string[]): number => {
         return array.filter(subarray => subarray.includes('No aplica')).length;
-      };
-      
+    };    
+
     const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
-    const family = object_json.miembros.length-cantidadConNoAplica
-    
+    const family = object_json.miembros.length-cantidadConNoAplica        
+
     const changeImage = (company: string): void => {
         const image = document.getElementById('dynamicImage') as HTMLImageElement;
     
@@ -163,8 +165,8 @@ export class HomeComponent {
         "income" : "15000",
         "plan_info": {
             "plan_name" : object_json.plan_name,
-            "efectividad" : object_json.efectividad[0],
-            "terminacion": object_json.terminacion[0],
+            "efectividad" : object_json.efectividad,
+            "terminacion": object_json.terminacion,
             "plan_id" : '',
             "max_desem" : object_json.max_desem,
             "family" : (object_json.miembros.length)+'x'+(family),
@@ -176,8 +178,8 @@ export class HomeComponent {
             "company": object_json.company
         }
     }
-
     
+    this.tabs = object_json.efectividad.length
     this.filas_content = object_json.miembros
     this.rows = object_json.rows
     return this.policy, this.rows
@@ -219,8 +221,8 @@ export class HomeComponent {
         "income" : "",
         "plan_info": {
             "plan_name" : '',
-            "efectividad" : '',
-            "terminacion": '',
+            "efectividad" : [],
+            "terminacion": [],
             "plan_id" : '',
             "max_desem" : '',
             "family" : '',
@@ -241,7 +243,5 @@ export class HomeComponent {
 
     get filasLimitadas() {
         return this.filas_content.slice(0, this.rows);
-    }
-
-    
+    }    
 }
