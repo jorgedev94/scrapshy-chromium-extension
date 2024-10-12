@@ -132,7 +132,7 @@ export class Scrapshy {
                                 };
 
                                 if (data) {
-                                    //const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
+                                    const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
                                     const addressArray = data.address[0].split(',').map((name) => name.trim());                                    
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
@@ -192,10 +192,44 @@ export class Scrapshy {
                                         datos.push(valores);
                                         data.miembros = datos;
                                         data.rows = datos.length
-                                    });                                    
+                                    });
+
+                                    function obtenerNombresUnicosConApellidos(nombres: string[]): string[] {
+                                        const nombresConApellidos: string[] = [];
+                                        const nombresUsados: Set<string> = new Set(); // Para almacenar nombres únicos
                                     
+                                        for (const nombreCompleto of nombres) {
+                                            const partes = nombreCompleto.split(' ');
+                                    
+                                            // Asegúrate de que hay al menos un nombre y un apellido
+                                            if (partes.length > 1) {
+                                                const primerNombre = partes[0]; // Primer nombre
+                                                const primerApellido = partes[1]; // Primer apellido
+                                                const segundoApellido = partes.length > 2 ? partes[2] : ''; // Segundo apellido (si existe)
+                                    
+                                                let nombreConApellido = `${primerNombre} ${primerApellido}`;
+                                    
+                                                // Verifica si el nombre ya ha sido usado
+                                                if (nombresUsados.has(nombreConApellido)) {
+                                                    // Si ya existe, usa el segundo apellido
+                                                    if (segundoApellido) {
+                                                        nombreConApellido = `${primerNombre} ${primerApellido} ${segundoApellido}`;
+                                                    }
+                                                }
+                                    
+                                                // Agrega el nombre al conjunto y al array
+                                                nombresUsados.add(nombreConApellido);
+                                                nombresConApellidos.push(nombreConApellido);
+                                            }
+                                        }
+                                    
+                                        return nombresConApellidos;
+                                    }
+
+                                    const resultados = obtenerNombresUnicosConApellidos(namesArray);
+
                                     data.owner = nombreCompleto[0]
-                                    //data.aplicantes = namesArray;
+                                    data.aplicantes = resultados;
                                     data.address = addressArray;
                                 }
                                 return data;

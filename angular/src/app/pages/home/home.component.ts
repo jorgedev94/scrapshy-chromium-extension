@@ -81,6 +81,8 @@ export class HomeComponent {
     filas_content: any[] = []
     rows: number = 0
     tabs: number = 5;
+    listaApli: number
+    cont: number = 0
 
     constructor(
         @Inject(TAB_ID) readonly tabId: number,
@@ -102,7 +104,7 @@ export class HomeComponent {
             return array.filter(subarray => subarray.includes('No aplica')).length;
         };    
         const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
-        const family = object_json.miembros.length-cantidadConNoAplica        
+        const family = object_json.miembros.length-cantidadConNoAplica
 
         const changeImage = (company: string): void => {
             const image = document.getElementById('dynamicImage') as HTMLImageElement;        
@@ -149,7 +151,7 @@ export class HomeComponent {
                     "lastname" : "G",
                     "dob" : "01/01/2004",
                     "ssn" : "245-54-5945",
-                    "type": "dependent_1"        
+                    "type": "dependent_1"
                 }
             ],
             "address" : {
@@ -176,9 +178,11 @@ export class HomeComponent {
                 "company": object_json.company,
                 "sub_id": object_json.subscriber_id,
                 "aplicantes" : object_json.aplicantes
-            }
-        }                
+            }            
+        }
 
+        this.listaApli = object_json.aplicantes.length
+        
         this.tabs = object_json.efectividad.length
         this.filas_content = object_json.miembros
         this.rows = object_json.rows
@@ -242,6 +246,8 @@ export class HomeComponent {
 
     return this.policy
     }
+
+    
 
     get filasLimitadas() {
         return this.filas_content.slice(0, this.rows);
