@@ -25,7 +25,7 @@ interface ScrapData {
   miembros: string[];
   rows: number;
   company: string;
-  prima: string[]
+  prima: string[];
 }
 
 @Injectable({
@@ -226,10 +226,10 @@ export class Scrapshy {
                                         return nombresConApellidos;
                                     }
 
-                                    const resultados = obtenerNombresUnicosConApellidos(namesArray);
+                                    const resultados = obtenerNombresUnicosConApellidos(aplicantes);
 
                                     data.owner = nombreCompleto[0]
-                                    data.aplicantes = resultados;
+                                    //data.aplicantes = resultados;
                                     data.address = addressArray;
                                 }
                                 return data;
