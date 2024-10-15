@@ -7,7 +7,8 @@
   "permissions": ["tabs", "sidePanel", "scripting", "storage","activeTab"],
   "action": {
     "default_popup": "index.html?#/popup",
-    "default_title": "Scrapshy Chromium Extension"
+    "default_title": "Scrapshy Chromium Extension",
+    "default_icon": "assets/SCE.png"
   },
   "host_permissions": [
     "*://*/*"

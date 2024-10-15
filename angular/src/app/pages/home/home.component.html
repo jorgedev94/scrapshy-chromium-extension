@@ -1,52 +1,207 @@
-<mat-grid-list cols="1">
-    <mat-card class="example-card">
-        <mat-card-header>
-          <img src="https://th.bing.com/th/id/R.5496169780c0e0cddb353673458ffc1a?rik=Of4g0mMtzcXAHQ&pid=ImgRaw&r=0" alt="" class="full-img">
-        </mat-card-header>
-        <mat-card-content>
-            <mat-grid-list cols="2" rowHeight="1:1.1">
-                <mat-grid-tile colspan="2">
-                    <mat-list class="inc">
-                        <mat-list-item><strong>Nombre titular: </strong>SANTIAGO MONCADA PEÑA</mat-list-item>
-                        <mat-list-item><strong>Fecha Nacimiento: </strong>10-19-2001</mat-list-item>
-                        <mat-list-item><strong>SSN: </strong>119-31-13161</mat-list-item>
-                        <mat-list-item><strong>Direccion: </strong>Los miamis beach <strong>Ciudad: </strong>Mayamis <strong>Zipcode:</strong> 660000</mat-list-item>
-                        <mat-list-item><strong>Estado: </strong>FL</mat-list-item>
-                        <mat-list-item><strong>E-mail: </strong>Prueba&#64;hotmail.com</mat-list-item>
-                        <mat-list-item><strong>Phone: </strong>123456789</mat-list-item>
-                        <mat-list-item><strong>Ingresos: </strong>$15100</mat-list-item> 
-                    </mat-list>
-                </mat-grid-tile>  
-                <mat-grid-tile>
-                    <mat-list class="inc" >
-                        <mat-list-item><strong>Familia: </strong><a href=""><strong>1x1</strong></a></mat-list-item>
-                        <mat-list-item><strong>MP ID: </strong>123456789</mat-list-item>
-                        <mat-list-item><strong>ID Subscriber: </strong>123456789</mat-list-item>
-                        <mat-list-item><strong>Efectividad: </strong>10-01-2024</mat-list-item>
-                        <mat-list-item><strong>Terminacion: </strong>12-31-2024</mat-list-item>
-                        <mat-list-item><strong>Estado: </strong>Inscrito</mat-list-item>
-                    </mat-list>
-                </mat-grid-tile>
-                <mat-grid-tile>
-                    <mat-list class="inc">
-                        <mat-list-item><strong>Valor prima: </strong>$99.99</mat-list-item>
-                        <mat-list-item><strong>Subsidio: </strong>$200.01</mat-list-item>
-                        <mat-list-item><strong>Max Desembolso: </strong>$1800</mat-list-item>
-                        <mat-list-item><strong>Deducible: </strong>$0</mat-list-item>
-                        <mat-list-item><strong>Plan ID: </strong>987654321</mat-list-item>
-                        <mat-list-item><strong>Agente: </strong>BS</mat-list-item>
-                    </mat-list>
-                </mat-grid-tile>
-            </mat-grid-list>
-        </mat-card-content>
-        <mat-card-actions class="btn">
-          <button mat-raised-button>LIKE</button>
-          <button mat-raised-button>SHARE</button>
-        </mat-card-actions>
-    </mat-card>
-</mat-grid-list>
-  
-  <p>
-    <strong>{{ message() }}</strong>
-  </p>
-  
+<div>
+    <div id="header" class="container-fluid bg-custom d-flex justify-content-between p-2">
+        <!--<img src="https://app.ashbyhq.com/api/images/org-theme-logo/dd5fd5f2-a60d-43e9-a139-b4bfc9995017/f7ddc493-f23e-4f08-89cf-6aee9a1c9f07.png" alt="" class="p-2 logo">-->
+        <div class="d-flex">
+          <img src="assets/SCE.png" class="logo p-2" alt="">
+          <div class="row ref">
+            <span class="position-relative" style="top: 0.8em"><strong>S</strong>crapshy <strong>C</strong>hromium</span>
+            <span class="position-relative" style="left: 2.3em;"><strong>E</strong>xtension</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center">
+          <svg (click)="closeExtension()" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x-lg svg" viewBox="0 0 16 16">
+            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+          </svg>
+        </div>
+    </div>
+    <div id="content" class="container-fluid p-2">
+        <mat-accordion>
+            <mat-expansion-panel [disabled]="isDisabled()"  [expanded]="!isDisabled()" style="background: ghostwhite !important">
+                <mat-expansion-panel-header>
+                <mat-panel-title><strong>Owner's information</strong> </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <mat-list>
+                          <div class="card mb-3 border-light" style="border-radius: 10px; background: ghostwhite !important">
+                            <div class="row g-0 " style="border-radius: 10px;">
+                              <div class="card-header" style="background: ghostwhite !important">
+                                <div class="d-flex justify-content-between">
+                                  <div>
+                                    <strong id="firstname">{{policy.contacts[0].firstname}} </strong><strong id="lastname">{{ policy.contacts[0].lastname }}</strong>
+                                  </div>                                  
+                                  <div style="color: #469346;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg><span style="font-size: 15px;" title="Estado"> Inscrito</span>
+                                  </div>                                  
+                                </div>                              
+                              </div>
+                              <div class="col-md-4 col-sm-4 d-flex justify-content-center align-items-center" >
+                                <img src="https://d1mm04003omuon.cloudfront.net/assets/logomark-8edc285da3ed1fe77677b59fa5cfe53aa590c186100c91aaac1c0cf89adc0b53.png" class="img-fluid rounded-start logo-1" alt="...">
+                              </div>                              
+                              <div class="col-md-8 col-sm-8">
+                                <div class="card-body text-center">                                
+                                  <div class="card-text">
+                                    <mat-list>
+                                      <mat-list-item><span style="font-size: 12px;"><strong>SSN:</strong> </span><span title="SSN" id="ssn"> {{policy.contacts[0].ssn}}</span></mat-list-item>
+                                      <mat-list-item><span style="font-size: 12px;"><strong>DoB:</strong> </span><span title="Fecha nacimiento" id="dob"> {{policy.contacts[0].dob}}</span></mat-list-item>
+                                      <mat-list-item><span style="font-size: 12px;"><strong>Income:</strong> </span><span title="Ingresos" id="income"> {{policy.income}}</span></mat-list-item>
+                                    </mat-list>
+                                  </div>
+                                  <p class="card-text"><small class="text-body-secondary"><span title="Direccion" id="address"> {{policy.address.address}}</span><span title="Ciudad" id="city"> {{policy.address.city}} <span id="state">{{policy.address.state}}</span> <span id="zipcode">{{policy.address.zipcode}}</span></span></small></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>                                         
+                        </mat-list>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                          <mat-list class="d-flex justify-content-around">
+                            <div>
+                              <mat-list-item><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope-at-fill" viewBox="0 0 16 16">
+                                <path d="M2 2A2 2 0 0 0 .05 3.555L8 8.414l7.95-4.859A2 2 0 0 0 14 2zm-2 9.8V4.698l5.803 3.546zm6.761-2.97-6.57 4.026A2 2 0 0 0 2 14h6.256A4.5 4.5 0 0 1 8 12.5a4.49 4.49 0 0 1 1.606-3.446l-.367-.225L8 9.586zM16 9.671V4.697l-5.803 3.546.338.208A4.5 4.5 0 0 1 12.5 8c1.414 0 2.675.652 3.5 1.671"/>
+                                <path d="M15.834 12.244c0 1.168-.577 2.025-1.587 2.025-.503 0-1.002-.228-1.12-.648h-.043c-.118.416-.543.643-1.015.643-.77 0-1.259-.542-1.259-1.434v-.529c0-.844.481-1.4 1.26-1.4.585 0 .87.333.953.63h.03v-.568h.905v2.19c0 .272.18.42.411.42.315 0 .639-.415.639-1.39v-.118c0-1.277-.95-2.326-2.484-2.326h-.04c-1.582 0-2.64 1.067-2.64 2.724v.157c0 1.867 1.237 2.654 2.57 2.654h.045c.507 0 .935-.07 1.18-.18v.731c-.219.1-.643.175-1.237.175h-.044C10.438 16 9 14.82 9 12.646v-.214C9 10.36 10.421 9 12.485 9h.035c2.12 0 3.314 1.43 3.314 3.034zm-4.04.21v.227c0 .586.227.8.581.8.31 0 .564-.17.564-.743v-.367c0-.516-.275-.708-.572-.708-.346 0-.573.245-.573.791"/>
+                              </svg> <span title="E-mail" id="email"> {{policy.email}}</span></mat-list-item>
+                            </div>                   
+                            <div>
+                              <mat-list-item><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-phone-fill" viewBox="0 0 16 16">
+                                <path d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zm6 11a1 1 0 1 0-2 0 1 1 0 0 0 2 0"/>
+                              </svg> <span title="Numero contacto" id="phone"> {{policy.phone}}</span></mat-list-item>                          
+                            </div>                          
+                          </mat-list>
+                      </div>
+                    </div>                        
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel [disabled]="isDisabled()" [(expanded)]="isThirdPanelOpen">
+              <mat-expansion-panel-header>
+                <mat-panel-title> <strong>Member's information</strong> </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12">
+                      <table class="table" style="--bs-table-bg: transparent">
+                        <thead class="text-center">
+                          <tr>                            
+                            <th scope="col">Solicitante</th>
+                            <th scope="col">Género</th>
+                            <th scope="col">Tabaco</th>
+                            <th scope="col">DoB</th>
+                            <th scope="col">SSN</th>
+                            <th scope="col">Elegibilidad</th>
+                          </tr>
+                        </thead>
+                        <tbody class="text-center">
+                          <tr *ngFor="let fila of filasLimitadas; let i = index">
+                            <td>{{fila[0]}}</td>
+                            <td>{{fila[1]}}</td>
+                            <td>{{fila[2]}}</td>
+                            <td>{{fila[3]}}</td>
+                            <td>{{fila[4]}}</td>
+                            <td>{{fila[5]}}</td>                    
+                          </tr>
+                        </tbody>
+                      </table>                    
+                  </div>
+                </div>                        
+            </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel [disabled]="isDisabled()" [(expanded)]="isSecondPanelOpen">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> <strong>Plan's information</strong> </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <mat-tab-group>
+                        <mat-tab *ngFor="let tab of [].constructor(tabs); let i = index" [label]="'Plan ' + (i + 1)">
+                          <mat-list>
+                            <div class="card mb-3 border-light" style="border-radius: 10px; background: ghostwhite !important">
+                              <div class="row g-0 " style="border-radius: 10px;">
+                                <div class="card-header" style="background: ghostwhite !important">
+                                  <div class="d-flex justify-content-between">
+                                    <strong><small>{{policy.plan_info.plan_name[i]}}</small></strong>
+                                    <div>
+                                      <span id="efectividad"><small>{{policy.plan_info.efectividad[i]}} - {{policy.plan_info.terminacion[i]}}</small></span>
+                                    </div>                                  
+                                  </div>                              
+                                </div>
+                                <div class="col-md-4 col-sm-4 d-flex justify-content-center align-items-center">
+                                  <img id="dynamicImage" src="" class="img-fluid rounded-start" alt="..." >
+                                </div>                              
+                                <div class="col-md-8 col-sm-8">
+                                  <div class="card-body">                                
+                                    <div class="card-text row">
+                                      <div class="col-sm-6 d-flex justify-content-center align-items-center text-center">
+                                        <table class="table" style="--bs-table-bg: transparent">
+                                          <tbody style="border: transparent">
+                                            <tr>
+                                              <td style="padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-person-circle mr-2" viewBox="0 0 16 16">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                                              </svg><span>{{policy.plan_info.aplicantes[i]}}</span></td>    
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="col-sm-6" style="padding: 2px;">
+                                        <mat-list>
+                                          <mat-list-item><span style="font-size: 12px;"><strong>Prima:</strong> </span><span title="Valor prima" id="prima_price"> {{policy.plan_info.prima[i]}}</span></mat-list-item>
+                                          <mat-list-item><span style="font-size: 12px;"><strong>Deducible:</strong> </span><span title="Deducible" id="deductible"> {{policy.plan_info.deducible[i]}}</span></mat-list-item>                                     
+                                          <mat-list-item><span style="font-size: 12px;"><strong>Max Desembolso: </strong> </span><span title="Max desembolso" id="max_desem"> {{policy.plan_info.max_desem[i]}}</span></mat-list-item>
+                                          <mat-list-item><span style="font-size: 12px;"><strong>Subscriber ID:</strong> </span><span title="Plan id" id="plan_id"> {{policy.plan_info.sub_id[i]}}</span></mat-list-item>             
+                                        </mat-list>
+                                      </div>
+                                    </div>
+                                    <div class="text-center">
+                                      <p class="card-text"><small class="text-body-secondary">MP ID<span title="MP ID" id="mp_id"> {{policy.plan_info.mp_id}} </span></small></p>
+                                    </div>                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                                         
+                          </mat-list>
+                        </mat-tab>
+                      </mat-tab-group>                                                                  
+                    </div>                   
+                  </div>                        
+              </div>
+            </mat-expansion-panel>            
+        </mat-accordion>
+    </div>
+    <div id="footer" class="container-fluid bg-custom">
+      <div class="row">
+        <div class="col-sm-4 p-2">
+          <!--<img src="assets/SCE.png" class="logo-1" alt="">-->
+          <button mat-button [matMenuTriggerFor]="menu"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
+            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
+          </svg></button>
+          <mat-menu #menu="matMenu" class="menu">
+            <button mat-menu-item (click)="onClick()">SCRAP</button>
+            <button mat-menu-item>COMPARE</button>
+            <button mat-menu-item (click)="clean()">CLEAN</button>
+          </mat-menu>        
+        </div>
+        <div class="col-sm-4 d-flex justify-content-center align-items-center p-2">
+          <div>
+            <span>Created with </span>
+          </div>
+          <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bootstrap m-1" viewBox="0 0 16 16">
+                  <path d="M5.062 12h3.475c1.804 0 2.888-.908 2.888-2.396 0-1.102-.761-1.916-1.904-2.034v-.1c.832-.14 1.482-.93 1.482-1.816 0-1.3-.955-2.11-2.542-2.11H5.062zm1.313-4.875V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23zm0 3.762V8.162h1.822c1.236 0 1.887.463 1.887 1.348 0 .896-.627 1.377-1.811 1.377z"/>
+                  <path d="M0 4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4zm4-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V4a3 3 0 0 0-3-3z"/>
+              </svg>
+              <svg _ngcontent-ng-c1910891413="" width="20" height="20" viewBox="0 0 960 960"><polygon _ngcontent-ng-c1910891413="" points="562.6,109.8 804.1,629.5 829.2,233.1"></polygon><polygon _ngcontent-ng-c1910891413="" points="624.9,655.9 334.3,655.9 297.2,745.8 479.6,849.8 662,745.8"></polygon><polygon _ngcontent-ng-c1910891413="" points="384.1,539.3 575.2,539.3 479.6,307"></polygon><polygon _ngcontent-ng-c1910891413="" points="396.6,109.8 130,233.1 155.1,629.5"></polygon></svg>
+          </div>
+        </div>
+        <div class="col-sm-4 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-github float-end svg" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+              </svg>
+        </div>
+      </div>
+    </div>
+</div>

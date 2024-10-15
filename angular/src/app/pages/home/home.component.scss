@@ -1,39 +1,57 @@
-.example-card {
-    min-width: 700px;
-    height: auto;
-    background: linear-gradient(lightblue,white 20%);
-}
-  
-.full-img{
-    height: 100%;
-    width: 100%;
+.logo{
+    width: 3.5em;
 }
 
-mat-card-header{
-    width: 30%;
+span{
+    font-size: 0.9em;
 }
 
-mat-card {
-    width: 100%;
-    height: auto;
+.logo-1{
+    width: 50%;
+    object-fit: contain;
 }
 
-.btn{
-    display: flex;
-    justify-content: space-around;
+.options{
+    width: 200px;
 }
 
-.btn > button{
-    background-color: gray;
-    color: white;
+.menu{
+    padding: 0 !important;
 }
 
-
-a{
-    text-decoration: none;
-    color: black;
+button{
+    border-radius: 10px;
+    text-align: center;
 }
 
-a:hover{
-    color: lightgreen;
+.ml-custom{
+    padding: 2px !important;
+}
+
+button > svg {
+    margin: 0 !important;
+}
+
+mat-list-item {
+    height: auto !important;
+}
+
+.svg{
+    cursor: pointer;
+}
+
+.bg-custom{
+    background-color: rgb(215, 238, 252);
+}
+
+.ref{
+    font-size: 15px;
+}
+
+.foot{
+    width: 33%;
+}
+
+svg{
+    margin-right: 0.3em;
 }
