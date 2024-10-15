@@ -68,7 +68,7 @@ export class HomeComponent {
             "deducible" : [],
             "mp_id" : '',
             "broker" : '',
-            "company": '',
+            "company": [],
             "sub_id" : [],
             "aplicantes": []
         }
@@ -106,10 +106,10 @@ export class HomeComponent {
         const cantidadConNoAplica = countSubarraysWithNoAplica(object_json.miembros);
         const family = object_json.miembros.length-cantidadConNoAplica
 
-        const changeImage = (company: string): void => {
+        const changeImage = (company: string[]): void => {
             const image = document.getElementById('dynamicImage') as HTMLImageElement;        
             if (image) {
-                const lowerCaseCompany = company.toLowerCase();
+                const lowerCaseCompany = company[0].toLowerCase();
         
                 if (lowerCaseCompany === 'aetna') {
                     image.src = 'assets/aetna.png';
@@ -128,6 +128,7 @@ export class HomeComponent {
                 }
             }
         };
+        
         changeImage(object_json.company);    
 
         this.policy = {
@@ -235,7 +236,7 @@ export class HomeComponent {
             "deducible" : [],
             "mp_id" : '',
             "broker" : '',
-            "company": '',
+            "company": [],
             "sub_id" : [],
             "aplicantes" : []
         }
@@ -251,5 +252,5 @@ export class HomeComponent {
 
     get filasLimitadas() {
         return this.filas_content.slice(0, this.rows);
-    }    
+    }
 }

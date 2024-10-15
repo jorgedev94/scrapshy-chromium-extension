@@ -24,7 +24,7 @@ interface ScrapData {
   plan_name: string[];
   miembros: string[];
   rows: number;
-  company: string;
+  company: string[];
   prima: string[];
 }
 
@@ -103,6 +103,16 @@ export class Scrapshy {
                                 const primas = document.querySelectorAll('.layouts-module__my15___zruiT span div .row div .typography-module__avenir20___P6Onc strong');
                                 const prima = Array.from(primas).map(el => el.textContent.trim());
 
+                                const companys = document.querySelectorAll('.layouts-module__my15___zruiT span div .box-module__header___ZQaCf div div div .issuer-logo')
+                                const altTexts = [];
+                                
+                                companys.forEach(img => {
+                                    const altText = img.getAttribute('alt');
+                                    altTexts.push(altText);
+                                });
+
+                                const company = altTexts.map(item => item.split(' ')[0])
+                                
                                 let data = {                                    
                                     aplicantes: aplicantes,
                                     efectividad: efectividad,
@@ -128,11 +138,10 @@ export class Scrapshy {
                                     plan_name: plan_name,
                                     miembros: [],
                                     rows: 0,
-                                    company: '',
+                                    company: company,
                                 };
 
                                 if (data) {
-                                    const namesArray = data.aplicantes[0].split(',').map((name) => name.trim());
                                     const addressArray = data.address[0].split(',').map((name) => name.trim());                                    
                                     const nombreCompleto = data.owner.split(' ');
                                     const cantidadnombres = nombreCompleto.length;
@@ -172,12 +181,8 @@ export class Scrapshy {
                                         const celdas = fila.querySelectorAll('td')
 
                                         if(celdas){
-                                            let company = celdas[0].textContent.trim()
-                                            const planArray = company.split(' ');
-                                            company = planArray[0]
                                             const subsidio = celdas[2].textContent.trim()
                                             data.subsidio = subsidio                                            
-                                            data.company = company
                                         }
                                     })
 
@@ -194,42 +199,7 @@ export class Scrapshy {
                                         data.rows = datos.length
                                     });
 
-                                    function obtenerNombresUnicosConApellidos(nombres: string[]): string[] {
-                                        const nombresConApellidos: string[] = [];
-                                        const nombresUsados: Set<string> = new Set(); // Para almacenar nombres únicos
-                                    
-                                        for (const nombreCompleto of nombres) {
-                                            const partes = nombreCompleto.split(' ');
-                                    
-                                            // Asegúrate de que hay al menos un nombre y un apellido
-                                            if (partes.length > 1) {
-                                                const primerNombre = partes[0]; // Primer nombre
-                                                const primerApellido = partes[1]; // Primer apellido
-                                                const segundoApellido = partes.length > 2 ? partes[2] : ''; // Segundo apellido (si existe)
-                                    
-                                                let nombreConApellido = `${primerNombre} ${primerApellido}`;
-                                    
-                                                // Verifica si el nombre ya ha sido usado
-                                                if (nombresUsados.has(nombreConApellido)) {
-                                                    // Si ya existe, usa el segundo apellido
-                                                    if (segundoApellido) {
-                                                        nombreConApellido = `${primerNombre} ${primerApellido} ${segundoApellido}`;
-                                                    }
-                                                }
-                                    
-                                                // Agrega el nombre al conjunto y al array
-                                                nombresUsados.add(nombreConApellido);
-                                                nombresConApellidos.push(nombreConApellido);
-                                            }
-                                        }
-                                    
-                                        return nombresConApellidos;
-                                    }
-
-                                    const resultados = obtenerNombresUnicosConApellidos(aplicantes);
-
                                     data.owner = nombreCompleto[0]
-                                    //data.aplicantes = resultados;
                                     data.address = addressArray;
                                 }
                                 return data;
