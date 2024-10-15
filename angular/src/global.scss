@@ -1,0 +1,8 @@
+// Importa el tema de Angular Material primero (opcional)
+@import '~@angular/material/prebuilt-themes/azure-blue.css';
+
+// Importa tus variables personalizadas antes de Bootstrap
+@import './styles/_variables.scss';
+
+// Importa Bootstrap SCSS
+@import 'bootstrap/scss/bootstrap';

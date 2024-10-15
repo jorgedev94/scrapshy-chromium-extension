@@ -11,11 +11,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
+import { HeaderComponent } from 'src/app/core/header/header.component';
+import { FooterComponent } from 'src/app/core/footer/footer.component';
 
 @Component({
   selector: 'pages-home',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule,MatTabsModule],
+  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule,MatTabsModule, HeaderComponent, FooterComponent],
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
   providers: [Scrapshy]
@@ -88,11 +90,6 @@ export class HomeComponent {
         @Inject(TAB_ID) readonly tabId: number,
         private sc: Scrapshy
     ) {}
-
-    closeExtension(){
-        window.close()
-    }
-    
 
     async onClick() {
         this.isDisabled.set(false)
@@ -188,64 +185,6 @@ export class HomeComponent {
         this.filas_content = object_json.miembros
         this.rows = object_json.rows
         return this.policy, this.rows
-    }
-
-    clean(){
-    this.policy = {
-        "contacts": [
-            {
-                "firstname" : "",
-                "lastname" : "",
-                "dob" : "",
-                "ssn" : "",
-                "type": ""        
-            },
-            {
-                "firstname" : "Santiago",
-                "lastname" : "Moncada",
-                "dob" : "01/01/2000",
-                "ssn" : "547-58-4654",
-                "type": "spouse"        
-            },
-            {
-                "firstname" : "Karol",
-                "lastname" : "G",
-                "dob" : "01/01/2004",
-                "ssn" : "245-54-5945",
-                "type": "dependent_1"        
-            }
-        ],
-        "address" : {
-            "address" : "",
-            "city" : "",
-            "state": "",
-            "zipcode" : ""
-        },
-        "email" : "",
-        "phone" : "",
-        "income" : "",
-        "plan_info": {
-            "plan_name" : [],
-            "efectividad" : [],
-            "terminacion": [],
-            "plan_id" : '',
-            "max_desem" : [],
-            "family" : '',
-            "prima" : [],
-            "subsidio" : '',
-            "deducible" : [],
-            "mp_id" : '',
-            "broker" : '',
-            "company": [],
-            "sub_id" : [],
-            "aplicantes" : []
-        }
-    }
-    this.isSecondPanelOpen = false;
-    this.isThirdPanelOpen = false;
-    this.isDisabled.set(true)
-
-    return this.policy
     }
 
     
