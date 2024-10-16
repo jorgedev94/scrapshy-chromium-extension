@@ -138,7 +138,33 @@ export class PolicyComponent {
         {
             id: 3,
             title: "Plan's information",
-            component: PlanInfoComponent
+            component: PlanInfoComponent,
+            data: {
+                plans: [
+                    {
+                        ffm_id: "555555555",
+                        hios_id: "4545FL54654456",
+                        name: "Silver 5",
+                        effective: "01-01-2024",
+                        termination: "12-31-2024",
+                        premium: "4554.54",
+                        deductible: "0",
+                        max_payout: "1500",
+                        dependents: "Jorge, Andrés",
+                    },
+                    {
+                        ffm_id: "6666666666",
+                        hios_id: "4545FL54654456",
+                        name: "Silver 6",
+                        effective: "01-01-2024",
+                        termination: "12-31-2024",
+                        premium: "4554.54",
+                        deductible: "0",
+                        max_payout: "1500",
+                        dependents: "Devia, Mosquera",
+                    }
+                ]
+            }
         }
     ]
 

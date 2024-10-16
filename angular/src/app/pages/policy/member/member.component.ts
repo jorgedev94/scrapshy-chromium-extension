@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, input } from "@angular/core";
+import { Component, computed, input, signal } from "@angular/core";
 import { Member } from "src/app/models/member.model";
 
 @Component({
@@ -9,16 +9,13 @@ import { Member } from "src/app/models/member.model";
     standalone: true
 })
 export class MemberInfoComponent {
-    columns = [
-        { key: 'id', label: 'ID' },
-        { key: 'firstname', label: 'Firstname' },
-        { key: 'lastname', label: 'Lastname' },
-        { key: 'dob', label: 'DOB' },
-        { key: 'ssn', label: 'SSN' },
-        { key: 'email', label: 'Email' },
-        { key: 'income', label: 'Income' },
-        { key: 'phone', label: 'Phone' }
-    ];
-
     members = input<Array<Member>>()
+    columns = computed(() => 
+        Object.keys(this.members()[0]).map((key) => (
+            {
+                key: key as keyof Member,
+                label: key
+            }
+        ))
+    )
 }
