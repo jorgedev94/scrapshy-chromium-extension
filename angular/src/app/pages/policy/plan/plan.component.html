@@ -1,0 +1,50 @@
+<mat-tab-group class="col-sm-12">
+      <mat-tab *ngFor="let tab in plan.length; let i = index" [label]="'Plan ' + (i + 1)">
+        <mat-list>
+          <div class="card mb-3 border-light" style="border-radius: 10px; background: ghostwhite !important">
+            <div class="row g-0 " style="border-radius: 10px;">
+              <div class="card-header" style="background: ghostwhite !important">
+                <div class="d-flex justify-content-between">
+                  <strong><small>{{plan().name}}</small></strong>
+                  <div>
+                    <span id="efectividad"><small>{{plan().effective}} - {{plan().termination}}</small></span>
+                  </div>                                  
+                </div>                              
+              </div>
+              <div class="col-md-4 col-sm-4 d-flex justify-content-center align-items-center">
+                <img id="dynamicImage" src="" class="img-fluid rounded-start" alt="..." >
+              </div>                              
+              <div class="col-md-8 col-sm-8">
+                <div class="card-body">                                
+                  <div class="card-text row">
+                    <div class="col-sm-6 d-flex justify-content-center align-items-center text-center">
+                      <table class="table" style="--bs-table-bg: transparent">
+                        <tbody style="border: transparent">
+                          <tr>
+                            <td style="padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-person-circle mr-2" viewBox="0 0 16 16">
+                              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg><span>{{plan().dependents}}</span></td>    
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-sm-6" style="padding: 2px;">
+                      <mat-list>
+                        <mat-list-item><span style="font-size: 12px;"><strong>Prima:</strong> </span><span title="Valor prima" id="prima_price"> {{plan().premium}}</span></mat-list-item>
+                        <mat-list-item><span style="font-size: 12px;"><strong>Deducible:</strong> </span><span title="Deducible" id="deductible"> {{plan().deductible}}</span></mat-list-item>                                     
+                        <mat-list-item><span style="font-size: 12px;"><strong>Max Desembolso: </strong> </span><span title="Max desembolso" id="max_desem"> {{plan().max_payout}}</span></mat-list-item>
+                        <mat-list-item><span style="font-size: 12px;"><strong>Subscriber ID:</strong> </span><span title="Plan id" id="plan_id"> {{plan().hios_id}}</span></mat-list-item>             
+                      </mat-list>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <p class="card-text"><small class="text-body-secondary">MP ID<span title="MP ID" id="mp_id"> {{plan().mp_id}} </span></small></p>
+                  </div>                                    
+                </div>
+              </div>
+            </div>
+          </div>                                         
+        </mat-list>
+      </mat-tab>
+    </mat-tab-group>                                                                  

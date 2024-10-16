@@ -5,7 +5,6 @@ import { MatMenuModule } from "@angular/material/menu";
 	selector: 'core-footer',
 	standalone: true,
 	templateUrl: 'footer.component.html',
-	styleUrls: ['footer.component.scss'],
     imports: [MatMenuModule]
 })
 export class FooterComponent {

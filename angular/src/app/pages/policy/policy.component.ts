@@ -1,30 +1,27 @@
-import { Component, Inject, signal } from '@angular/core'
-import { TAB_ID } from 'src/app/app.config'
-import { Scrapshy } from '../../services/scrap.service';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatListModule } from '@angular/material/list';
-import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card'
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatIconModule} from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
-import {MatTabsModule} from '@angular/material/tabs';
-import { HeaderComponent } from 'src/app/core/header/header.component';
-import { FooterComponent } from 'src/app/core/footer/footer.component';
+import { CommonModule } from "@angular/common";
+import { Component, Inject, signal } from "@angular/core";
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterOutlet } from "@angular/router";
+import { OwnerInfoComponent } from "./owner/owner.component";
+import { TAB_ID } from "src/app/app.config";
+import { Scrapshy } from "src/app/services/scrap.service";
+import { MemberInfoComponent } from "./member/member.component";
+import { PlanInfoComponent } from "./plan/plan.component";
 
 @Component({
-  selector: 'pages-home',
-  standalone: true,
-  imports: [CommonModule, MatGridListModule, MatButtonModule, MatMenuModule, MatListModule, MatCardModule,MatExpansionModule,MatIconModule, FormsModule,MatTabsModule, HeaderComponent, FooterComponent],
-  templateUrl: 'home.component.html',
-  styleUrls: ['home.component.scss'],
-  providers: [Scrapshy]
+    selector: "page-policy",
+    templateUrl: "policy.component.html",
+    styleUrl: "policy.component.scss",
+    imports: [CommonModule, MatTabsModule, MatExpansionModule, RouterOutlet, OwnerInfoComponent],
+    standalone: true
 })
-export class HomeComponent {
-
-
+export class PolicyComponent {
+    constructor(
+        @Inject(TAB_ID) readonly tabId: number,
+        private sc: Scrapshy
+    ) {}
+    isDisabled = signal(true);
     policy = {
         "contacts": [
             {
@@ -79,17 +76,71 @@ export class HomeComponent {
     scrapper = signal('');
     isSecondPanelOpen = false; // Estado del Panel 2
     isThirdPanelOpen = false;
-    isDisabled = signal(true);
     filas_content: any[] = []
     rows: number = 0
     tabs: number = 5;
     listaApli: number
     cont: number = 0
 
-    constructor(
-        @Inject(TAB_ID) readonly tabId: number,
-        private sc: Scrapshy
-    ) {}
+    panels = [
+        {
+            id: 1,
+            title: "Owner's information",
+            component: OwnerInfoComponent,
+            data: {
+                owner: {
+                    id: 1,
+                    firstname: "Jorge",
+                    lastname: "Devia",
+                    email: "juan.perez@example.com",
+                    ssn: "123-45-6789",
+                    dob: "1990-01-01",
+                    income: "50000",
+                    address: {
+                        address: "Calle Falsa 123",
+                        city: "Ciudad",
+                        state: "Estado",
+                        zipcode: "12345"
+                    },
+                    phone: "555-1234"
+                }
+            }
+        },
+        {
+            id: 2,
+            title: "Member's information",
+            component: MemberInfoComponent,
+            data: {
+                members: [
+                    {
+                        id: 1,
+                        firstname: "Pepito",
+                        lastname: "Perez",
+                        email: "test@test.com",
+                        ssn: "546-55-5445",
+                        dob: "03/29/1994",
+                        income: "10000",
+                        phone: "786-546-5464"
+                    },
+                    {
+                        id: 2,
+                        firstname: "Maria",
+                        lastname: "Socorro",
+                        email: "test@test.com",
+                        ssn: "546-55-5445",
+                        dob: "03/29/1994",
+                        income: "10000",
+                        phone: "786-546-5464"
+                    }
+                ]
+            }
+        },
+        {
+            id: 3,
+            title: "Plan's information",
+            component: PlanInfoComponent
+        }
+    ]
 
     async onClick() {
         this.isDisabled.set(false)
