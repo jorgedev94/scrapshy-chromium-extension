@@ -6,58 +6,101 @@ import { Plan } from '../models/plan.model';
 import { Member } from '../models/member.model';
 import { Address } from '../models/address.model';
 
-interface ScrapData {
-  efectividad: string[];
-  aplicantes: string[];
-  policy_id: string[];
-  subscriber_id: string[];
-  terminacion: string[];
-  ffm_id: string[];
-  owner: string;
-  email: string[];
-  phone: string[];
-  address: string[];
-  firstname: string;
-  lastname: string;
-  middlename: string;
-  owner_ssn: string;
-  owner_dob: string;
-  status: string[];
-  broker: string;
-  deducible: string[];
-  max_desem: string[];
-  subsidio: string;
-  plan_name: string[];
-  miembros: string[];
-  rows: number;
-  company: string[];
-  prima: string[];
-}
-
 @Injectable({
     providedIn: 'root',
 })
 export class Scrapshy {
     private _policy = signal(new Policy());
 
+    get policySignal(): WritableSignal<Policy> {
+        return this._policy;
+    }
+
     constructor(
         @Inject(TAB_ID) readonly tabId: number,
     ) {}
 
-    onClick() {
+    async onClick() {
+        const document = await this.get_dom()
+            .then((domString) => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(domString, 'text/html');
+                return doc
+            })
+            .catch((error) => {
+                console.error('Error al obtener el DOM:', error);
+            });
+        this._policy.set(this.scrapPolicy(document))
+    }
+
+    get_dom(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            // Capturamos las referencias de resolve y reject
+            const resolveRef = resolve;
+            const rejectRef = reject;
+    
+            chrome.scripting.executeScript(
+                {
+                    target: { tabId: this.tabId },
+                    func: () => {
+                        return document.documentElement.outerHTML;
+                    },
+                },
+                (injectionResults) => {
+                    if (chrome.runtime.lastError) {
+                        rejectRef(chrome.runtime.lastError);
+                    } else if (injectionResults && injectionResults[0] && injectionResults[0].result) {
+                        resolveRef(injectionResults[0].result);
+                    } else {
+                        rejectRef(new Error('No se obtuvo el DOM.'));
+                    }
+                }
+            );
+        });
+    }
+
+    getSpanTexts(document, texts: string[]) {
+        const textConditions = texts.map((text) => `text()="${text}"`).join(' or ');
+        const xpath = `//tr/td[span[${textConditions}]]/following-sibling::td/span`;
+
+        const result = document.evaluate(
+            xpath,
+            document,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null,
+        );
+        console.log(result);
+        const values: string[] = [];
+
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const span = result.snapshotItem(i) as HTMLElement;
+            if (span) {
+                values.push(span.textContent || '');
+            }
+        }
+
+        return values;
+    }
+    
+    get_owner(document) {
+        const texts = ['ID de FFM', 'FFM ID']
+        return this.getSpanTexts(document ,texts);
+    }
+
+    scrapPolicy(document): Policy {
+        const ffm_id = this.get_owner(document)
+        
         const address = new Address()
-        const owner_member = new Member(1, "Jorge", "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
+        const owner_member = new Member(1, ffm_id[0], "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
         const owner = new Owner(address, ...Object.values(owner_member))
         const plans = [new Plan()]
         const members = [new Member()]
-        this._policy.set(new Policy(owner, plans, members))
-        console.log(owner)
+        return new Policy(owner, plans, members)
     }
-    
-    get policySignal(): WritableSignal<Policy> {
-        return this._policy;
-    }
-    /* const changeImage = (company: string[]): void => {
+
+
+        /* const changeImage = (company: string[]): void => {
         const image = document.getElementById('dynamicImage') as HTMLImageElement;        
         if (image) {
             const lowerCaseCompany = company[0].toLowerCase();
@@ -83,82 +126,7 @@ export class Scrapshy {
     changeImage(object_json.company);   */
 
     
-
-    scrapPolicy(): Promise<Policy> {
-        return new Promise((resolve) => {
-            new Policy()
-        })
-         /* data: {
-                owner: {
-                    id: 1,
-                    firstname: "Jorge",
-                    lastname: "Devia",
-                    email: "juan.perez@example.com",
-                    ssn: "123-45-6789",
-                    dob: "1990-01-01",
-                    income: "50000",
-                    address: {
-                        address: "Calle Falsa 123",
-                        city: "Ciudad",
-                        state: "Estado",
-                        zipcode: "12345"
-                    },
-                    phone: "555-1234"
-                }
-            } */
-            /* data: {
-                members: [
-                    {
-                        id: 1,
-                        firstname: "Pepito",
-                        lastname: "Perez",
-                        email: "test@test.com",
-                        ssn: "546-55-5445",
-                        dob: "03/29/1994",
-                        income: "10000",
-                        phone: "786-546-5464"
-                    },
-                    {
-                        id: 2,
-                        firstname: "Maria",
-                        lastname: "Socorro",
-                        email: "test@test.com",
-                        ssn: "546-55-5445",
-                        dob: "03/29/1994",
-                        income: "10000",
-                        phone: "786-546-5464"
-                    }
-                ]
-            } */
-        
-            /* data: {
-                plans: [
-                    {
-                        ffm_id: "555555555",
-                        hios_id: "4545FL54654456",
-                        name: "Silver 5",
-                        effective: "01-01-2024",
-                        termination: "12-31-2024",
-                        premium: "4554.54",
-                        deductible: "0",
-                        max_payout: "1500",
-                        dependents: "Jorge, Andrés",
-                    },
-                    {
-                        ffm_id: "6666666666",
-                        hios_id: "4545FL54654456",
-                        name: "Silver 6",
-                        effective: "01-01-2024",
-                        termination: "12-31-2024",
-                        premium: "4554.54",
-                        deductible: "0",
-                        max_payout: "1500",
-                        dependents: "Devia, Mosquera",
-                    }
-                ]
-            } */
-    }
-    scrap(tabId): Promise<ScrapData | null> {
+    /* scrap(tabId): Promise<ScrapData | null> {
         return new Promise((resolve) => {
             chrome.scripting.executeScript(
                 {
@@ -344,5 +312,5 @@ export class Scrapshy {
                     },
                 )
             })
-    }
+    } */
 }
