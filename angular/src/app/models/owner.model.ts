@@ -3,9 +3,10 @@ import { Member } from "./member.model";
 
 export class Owner extends Member {
     constructor(
-        public address: Address = new Address()
+        public address: Address = new Address(),
+        ...memberArgs: ConstructorParameters<typeof Member>
     ) {
-        super();
+        super(...memberArgs);
     }
 }
   

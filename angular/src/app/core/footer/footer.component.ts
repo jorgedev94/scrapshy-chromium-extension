@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { MatMenuModule } from "@angular/material/menu";
+import { Scrapshy } from "src/app/services/scrap.service";
 
 @Component({
 	selector: 'core-footer',
@@ -8,9 +9,14 @@ import { MatMenuModule } from "@angular/material/menu";
     imports: [MatMenuModule]
 })
 export class FooterComponent {
-    onClick() {
-        
+    constructor(private sc: Scrapshy) {
+
     }
+
+    onClick() {
+        this.sc.onClick()
+    }
+
     clean() {
         /* this.policy = {
             "contacts": [

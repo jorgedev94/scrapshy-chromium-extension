@@ -1,5 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Policy } from '../models/policy.model';
+import { TAB_ID } from '../app.config';
+import { Owner } from '../models/owner.model';
+import { Plan } from '../models/plan.model';
+import { Member } from '../models/member.model';
+import { Address } from '../models/address.model';
 
 interface ScrapData {
   efectividad: string[];
@@ -33,7 +38,25 @@ interface ScrapData {
     providedIn: 'root',
 })
 export class Scrapshy {
-    constructor() {}
+    private _policy = signal(new Policy());
+
+    constructor(
+        @Inject(TAB_ID) readonly tabId: number,
+    ) {}
+
+    onClick() {
+        const address = new Address()
+        const owner_member = new Member(1, "Jorge", "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
+        const owner = new Owner(address, ...Object.values(owner_member))
+        const plans = [new Plan()]
+        const members = [new Member()]
+        this._policy.set(new Policy(owner, plans, members))
+        console.log(owner)
+    }
+    
+    get policySignal(): WritableSignal<Policy> {
+        return this._policy;
+    }
     /* const changeImage = (company: string[]): void => {
         const image = document.getElementById('dynamicImage') as HTMLImageElement;        
         if (image) {
@@ -44,7 +67,7 @@ export class Scrapshy {
             } else if (lowerCaseCompany === 'oscar') {
                 image.src = 'assets/oscar.png'; 
             } else if (lowerCaseCompany === 'ambetter') {
-                image.src = 'assets/Ambetter.png'; 
+                image.src = 'assets/Ambetter.png'; z
             } else if (lowerCaseCompany === 'molina') {
                 image.src = 'assets/molina.png'; 
             } else if (lowerCaseCompany === 'ambetter') {
@@ -59,7 +82,9 @@ export class Scrapshy {
     
     changeImage(object_json.company);   */
 
-    scrapPolicy(tabId): Promise<Policy> {
+    
+
+    scrapPolicy(): Promise<Policy> {
         return new Promise((resolve) => {
             new Policy()
         })

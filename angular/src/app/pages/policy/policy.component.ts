@@ -1,15 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, OnInit, signal } from "@angular/core";
+import { Component, computed, OnInit, signal } from "@angular/core";
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterOutlet } from "@angular/router";
 import { OwnerInfoComponent } from "./owner/owner.component";
-import { TAB_ID } from "src/app/app.config";
 import { Scrapshy } from "src/app/services/scrap.service";
 import { MemberInfoComponent } from "./member/member.component";
 import { PlanInfoComponent } from "./plan/plan.component";
 import { Plan } from "src/app/models/plan.model";
-import { Policy } from "src/app/models/policy.model";
 import { Panel } from "src/app/pages/policy/models/panel.model";
 
 @Component({
@@ -20,50 +18,48 @@ import { Panel } from "src/app/pages/policy/models/panel.model";
     standalone: true
 })
 export class PolicyComponent implements OnInit {
-    policy = signal(new Policy())
+    policy = this.sc.policySignal
     errors = signal("")
     isDisabled = signal(true);
-    panels = signal([new Panel()])
+    panels = computed(() => [
+        {
+          id: 1,
+          title: "Owner's information",
+          component: OwnerInfoComponent,
+          data: {
+            owner: this.policy().owner,
+          },
+        },
+        {
+          id: 2,
+          title: "Member's information",
+          component: MemberInfoComponent,
+          data: {
+            members: this.policy().members,
+          },
+        },
+        {
+          id: 3,
+          title: "Plan's information",
+          component: PlanInfoComponent,
+          data: {
+            plans: this.policy().plans,
+          },
+        },
+    ]);
     
     constructor(
-        @Inject(TAB_ID) readonly tabId: number,
         private sc: Scrapshy
-    ) {}
+    ) {
+
+    }
 
     ngOnInit(): void {
-        this.panels.set([
-            {
-                id: 1,
-                title: "Owner's information",
-                component: OwnerInfoComponent,
-                data: {
-                    owner: this.policy().owner
-                }
-            },
-            {
-                id: 2,
-                title: "Member's information",
-                component: MemberInfoComponent,
-                data: {
-                    members: this.policy().members
-                }
-            },
-            {
-                id: 3,
-                title: "Plan's information",
-                component: PlanInfoComponent,
-                data: {
-                    plans: this.policy().plans
-                }
-            }
-        ])
+        
     }
     
     async onClick() {
         this.isDisabled.set(false)
-        this.sc.scrapPolicy(this.tabId).then((policy: Policy) => {
-            this.policy.set(policy);
-        })
 
         try {
             const plans_json = [
@@ -92,10 +88,10 @@ export class PolicyComponent implements OnInit {
             ]
 
             const plansInstances = Plan.fromJSON(plans_json)
-            this.policy.update(policy => {
+            /* this.policy.update(policy => {
                 policy.plans = plansInstances
                 return policy
-            })        
+            }) */  
         }
         catch (error: any) {
             // Capturar y almacenar el mensaje de error
