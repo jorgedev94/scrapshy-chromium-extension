@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, input, signal } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
 import { Member } from "src/app/models/member.model";
 
 @Component({

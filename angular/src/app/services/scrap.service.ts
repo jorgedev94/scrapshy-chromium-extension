@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Policy } from '../models/policy.model';
 
 interface ScrapData {
   efectividad: string[];
@@ -33,7 +34,105 @@ interface ScrapData {
 })
 export class Scrapshy {
     constructor() {}
+    /* const changeImage = (company: string[]): void => {
+        const image = document.getElementById('dynamicImage') as HTMLImageElement;        
+        if (image) {
+            const lowerCaseCompany = company[0].toLowerCase();
+    
+            if (lowerCaseCompany === 'aetna') {
+                image.src = 'assets/aetna.png';
+            } else if (lowerCaseCompany === 'oscar') {
+                image.src = 'assets/oscar.png'; 
+            } else if (lowerCaseCompany === 'ambetter') {
+                image.src = 'assets/Ambetter.png'; 
+            } else if (lowerCaseCompany === 'molina') {
+                image.src = 'assets/molina.png'; 
+            } else if (lowerCaseCompany === 'ambetter') {
+                image.src = 'assets/Ambetter.png'; 
+            } else if (lowerCaseCompany === 'blue') {
+                image.src = 'assets/bc bs.png'; 
+            } else if (lowerCaseCompany === 'florida') {
+                image.src = 'assets/florida blue.png'; 
+            }
+        }
+    };
+    
+    changeImage(object_json.company);   */
 
+    scrapPolicy(tabId): Promise<Policy> {
+        return new Promise((resolve) => {
+            new Policy()
+        })
+         /* data: {
+                owner: {
+                    id: 1,
+                    firstname: "Jorge",
+                    lastname: "Devia",
+                    email: "juan.perez@example.com",
+                    ssn: "123-45-6789",
+                    dob: "1990-01-01",
+                    income: "50000",
+                    address: {
+                        address: "Calle Falsa 123",
+                        city: "Ciudad",
+                        state: "Estado",
+                        zipcode: "12345"
+                    },
+                    phone: "555-1234"
+                }
+            } */
+            /* data: {
+                members: [
+                    {
+                        id: 1,
+                        firstname: "Pepito",
+                        lastname: "Perez",
+                        email: "test@test.com",
+                        ssn: "546-55-5445",
+                        dob: "03/29/1994",
+                        income: "10000",
+                        phone: "786-546-5464"
+                    },
+                    {
+                        id: 2,
+                        firstname: "Maria",
+                        lastname: "Socorro",
+                        email: "test@test.com",
+                        ssn: "546-55-5445",
+                        dob: "03/29/1994",
+                        income: "10000",
+                        phone: "786-546-5464"
+                    }
+                ]
+            } */
+        
+            /* data: {
+                plans: [
+                    {
+                        ffm_id: "555555555",
+                        hios_id: "4545FL54654456",
+                        name: "Silver 5",
+                        effective: "01-01-2024",
+                        termination: "12-31-2024",
+                        premium: "4554.54",
+                        deductible: "0",
+                        max_payout: "1500",
+                        dependents: "Jorge, Andrés",
+                    },
+                    {
+                        ffm_id: "6666666666",
+                        hios_id: "4545FL54654456",
+                        name: "Silver 6",
+                        effective: "01-01-2024",
+                        termination: "12-31-2024",
+                        premium: "4554.54",
+                        deductible: "0",
+                        max_payout: "1500",
+                        dependents: "Devia, Mosquera",
+                    }
+                ]
+            } */
+    }
     scrap(tabId): Promise<ScrapData | null> {
         return new Promise((resolve) => {
             chrome.scripting.executeScript(

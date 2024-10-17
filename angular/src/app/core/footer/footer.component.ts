@@ -9,6 +9,7 @@ import { MatMenuModule } from "@angular/material/menu";
 })
 export class FooterComponent {
     onClick() {
+        
     }
     clean() {
         /* this.policy = {
