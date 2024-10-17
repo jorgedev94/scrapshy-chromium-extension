@@ -30,6 +30,7 @@ export class Scrapshy {
             .catch((error) => {
                 console.error('Error al obtener el DOM:', error);
             });
+        console.log(document);
         this._policy.set(this.scrapPolicy(document))
     }
 
@@ -70,7 +71,7 @@ export class Scrapshy {
             XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
             null,
         );
-        console.log(result);
+        
         const values: string[] = [];
 
         for (let i = 0; i < result.snapshotLength; i++) {
@@ -88,11 +89,47 @@ export class Scrapshy {
         return this.getSpanTexts(document ,texts);
     }
 
+    get_application(document) {
+        // XPath para seleccionar todas las filas excepto la fila de encabezado (usamos tbody/tr para excluir th)
+        const xpath = "//div[@id='aca-app-coverage-details']//table/tbody/tr";
+        const result = document.evaluate(
+            xpath,
+            document,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null,
+        );
+    
+        // Array para almacenar las filas
+        const tableData: string[][] = [];
+    
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const row = result.snapshotItem(i) as HTMLElement;
+            if (row) {
+                // Extraer todas las celdas de esta fila
+                const cells = row.querySelectorAll('td');
+                const rowData: string[] = [];
+    
+                // Iterar sobre las celdas y extraer su contenido
+                cells.forEach((cell) => {
+                    rowData.push(cell.textContent?.trim() || '');
+                });
+    
+                // Agregar esta fila al array de la tabla
+                tableData.push(rowData);
+            }
+        }
+    
+        console.log(tableData);
+        return tableData;
+    }
+    
+
     scrapPolicy(document): Policy {
-        const ffm_id = this.get_owner(document)
+        const owner_test = this.get_application(document)
         
         const address = new Address()
-        const owner_member = new Member(1, ffm_id[0], "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
+        const owner_member = new Member(1, "OK", "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
         const owner = new Owner(address, ...Object.values(owner_member))
         const plans = [new Plan()]
         const members = [new Member()]
