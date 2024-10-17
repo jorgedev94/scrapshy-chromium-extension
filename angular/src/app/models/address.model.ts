@@ -1,6 +1,8 @@
-export interface Address {
-    address: string;
-    city: string;
-    state: string;
-    zipcode: string;
+export class Address {
+    constructor(
+        public address: string = '',
+        public city: string = '',
+        public state: string = '',
+        public zipcode: string = '',
+    ) {}
 }

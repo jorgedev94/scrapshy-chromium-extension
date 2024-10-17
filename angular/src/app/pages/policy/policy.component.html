@@ -1,4 +1,5 @@
 <div id="content" class="container-fluid p-2">
+    {{ errors() }}
     <mat-accordion>
         @for (panel of panels; track panel.id) {
             <mat-expansion-panel [disabled]="!isDisabled()"  [expanded]="!isDisabled()" style="background: ghostwhite !important">

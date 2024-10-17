@@ -1,10 +1,12 @@
-export interface Member {
-    id: number;
-    firstname: string;
-    lastname: string;
-    email: string;
-    ssn: string;
-    dob: string;
-    income: string;
-    phone: string;
+export class Member {
+    constructor(
+        public id: number = 0,
+        public firstname: string = '',
+        public lastname: string = '',
+        public email: string = '',
+        public ssn: string = '',
+        public dob: string = '',
+        public income: string = '',
+        public phone: string = '',
+    ) {}
 }

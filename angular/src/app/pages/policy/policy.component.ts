@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, signal } from "@angular/core";
+import { Component, Inject, OnInit, signal } from "@angular/core";
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterOutlet } from "@angular/router";
@@ -8,6 +8,9 @@ import { TAB_ID } from "src/app/app.config";
 import { Scrapshy } from "src/app/services/scrap.service";
 import { MemberInfoComponent } from "./member/member.component";
 import { PlanInfoComponent } from "./plan/plan.component";
+import { Owner } from "src/app/models/owner.model";
+import { Member } from "src/app/models/member.model";
+import { Plan } from "src/app/models/plan.models";
 
 @Component({
     selector: "page-policy",
@@ -16,11 +19,63 @@ import { PlanInfoComponent } from "./plan/plan.component";
     imports: [CommonModule, MatTabsModule, MatExpansionModule, RouterOutlet, OwnerInfoComponent],
     standalone: true
 })
-export class PolicyComponent {
+export class PolicyComponent implements OnInit{
+    plans = signal<Array<Plan>>([new Plan()])
+    errors = signal<String>("OK")
     constructor(
         @Inject(TAB_ID) readonly tabId: number,
         private sc: Scrapshy
-    ) {}
+    ) {
+    }
+    
+    ngOnInit(): void {
+        console.log("Nunca entré!")
+        try {
+            const plans_json = [
+                {
+                    ffm_id: 12345678901,
+                    hios_id: "4545FL54654456",
+                    name: "Silver 5",
+                    effective: "01-01-2024",
+                    termination: "12-31-2024",
+                    premium: "4554.54",
+                    deductible: "0",
+                    max_payout: "1500",
+                    dependents: "Jorge, Andrés",
+                },
+                {
+                    ffm_id: 1234567899,
+                    hios_id: "4545FL54654456",
+                    name: "Silver 6",
+                    effective: "01-01-2024",
+                    termination: "12-31-2024",
+                    premium: "4554.54",
+                    deductible: "0",
+                    max_payout: "1500",
+                    dependents: "Devia, Mosquera",
+                }
+            ]
+
+             const plansInstances = plans_json.map(data => new Plan(
+                data.ffm_id,
+                data.hios_id,
+                data.name,
+                data.effective,
+                data.termination,
+                data.premium,
+                data.deductible,
+                data.max_payout,
+                data.dependents
+            ));
+
+            this.plans.set(plansInstances);
+        }
+        catch (error: any) {
+            // Capturar y almacenar el mensaje de error
+            this.errors.set(error.message);
+            console.log("FUCKKSKKSDKASKASK!")
+        }
+    }
     isDisabled = signal(true);
     policy = {
         "contacts": [
@@ -82,12 +137,38 @@ export class PolicyComponent {
     listaApli: number
     cont: number = 0
 
+    owner = signal<Owner>(new Owner());
+    members = signal<Array<Member>>([new Member()])
+
+    
+
     panels = [
         {
             id: 1,
             title: "Owner's information",
             component: OwnerInfoComponent,
             data: {
+                owner: this.owner()
+            }
+        },
+        {
+            id: 2,
+            title: "Member's information",
+            component: MemberInfoComponent,
+            data: {
+                members: this.members()
+            }
+        },
+        {
+            id: 3,
+            title: "Plan's information",
+            component: PlanInfoComponent,
+            data: {
+                plans: this.plans()
+            }
+        }
+    ]
+            /* data: {
                 owner: {
                     id: 1,
                     firstname: "Jorge",
@@ -104,13 +185,8 @@ export class PolicyComponent {
                     },
                     phone: "555-1234"
                 }
-            }
-        },
-        {
-            id: 2,
-            title: "Member's information",
-            component: MemberInfoComponent,
-            data: {
+            } */
+            /* data: {
                 members: [
                     {
                         id: 1,
@@ -133,13 +209,9 @@ export class PolicyComponent {
                         phone: "786-546-5464"
                     }
                 ]
-            }
-        },
-        {
-            id: 3,
-            title: "Plan's information",
-            component: PlanInfoComponent,
-            data: {
+            } */
+        
+            /* data: {
                 plans: [
                     {
                         ffm_id: "555555555",
@@ -164,11 +236,13 @@ export class PolicyComponent {
                         dependents: "Devia, Mosquera",
                     }
                 ]
-            }
-        }
-    ]
+            } */
 
     async onClick() {
+
+    }
+
+    async onClick2() {
         this.isDisabled.set(false)
         
         const object_json = await this.sc.scrap(this.tabId);

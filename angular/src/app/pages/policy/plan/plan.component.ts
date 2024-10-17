@@ -11,5 +11,5 @@ import { Plan } from "src/app/models/plan.models";
     standalone: true
 })
 export class PlanInfoComponent {
-    plans = input<Array<Plan>>()
+    plans = input<Array<Plan>>([new Plan()])
 }
