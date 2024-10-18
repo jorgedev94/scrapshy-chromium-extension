@@ -12,10 +12,11 @@ export class Plan {
         public deductible: string = '',
         public opp_max: string = '',
         public premium_total: string = '',
-        public dependents: string = '',
+        public dependents: Array<string> = [''],
         public carrier_phone: string = '',
         public payment_phone: string = '',
-        public agent_record: string = ''
+        public agent_record: string = '',
+        public company: string = ''
     ) {
         //this.validate();
     }
@@ -71,11 +72,6 @@ export class Plan {
 
         if (typeof this.opp_max !== 'number' || this.opp_max < 0) {
             throw new Error('max_payout must be a positive number.');
-        }
-
-        // Validar dependents: no vacío
-        if (!this.dependents || this.dependents.trim() === '') {
-            throw new Error('dependents is required.');
         }
     }
     

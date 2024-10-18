@@ -157,7 +157,8 @@ export class Scrapshy {
     }   
 
     extractPlanData(planRow) {
-        const planName = planRow.querySelector('span[role="button"]').textContent.trim();
+        let planName = planRow.querySelector('span[role="button"]').textContent.trim();
+        planName = planName.replace(/\s*\(.*?\)\s*/g, '').trim();
     
         const premiumElement = planRow.querySelectorAll('.col-xs-4')[0];
         const premium = premiumElement.querySelector('strong').textContent.trim();
@@ -170,13 +171,18 @@ export class Scrapshy {
     
         const oopMaxElement = planRow.querySelectorAll('.col-xs-4')[2];
         const oopMax = oopMaxElement.querySelector('span').textContent.trim();
+
+        const imageElement = planRow.querySelector('img');
+        let imageAlt = imageElement ? imageElement.getAttribute('alt').trim() : '';
+        imageAlt = imageAlt.replace(/\s*\(.*?\)\s*/g, '').trim();
     
         return {
             planName: planName,
             premium: premium,
             premiumWas: premiumWas,
             deductible: deductible,
-            oopMax: oopMax
+            oopMax: oopMax,
+            company: imageAlt
         };
     }
 
@@ -202,9 +208,10 @@ export class Scrapshy {
                     const premium = plan_details.premium
                     const deductible = plan_details.deductible
                     const opp_max = plan_details.oopMax
-                    const dependents = plan_info[0][3]
+                    const dependents = plan_info[0][3].split(',')
                     const premium_total = plan_details.premiumWas
                     const carrier_phone = plan_info[0][7]
+                    const company = plan_details.company
                     let payment_phone = ''
                     let agent_record = ''
                     if (plan_info[0].length > 8) {
@@ -216,7 +223,7 @@ export class Scrapshy {
                     }
                     
                     plans.push(
-                        new Plan(status, ffm_id, hios_id, subscriber_id, policy_id, name, effective, termination, premium, deductible, opp_max, premium_total, dependents, carrier_phone, payment_phone, agent_record)
+                        new Plan(status, ffm_id, hios_id, subscriber_id, policy_id, name, effective, termination, premium, deductible, opp_max, premium_total, dependents, carrier_phone, payment_phone, agent_record, company)
                     )
                 }
             }
