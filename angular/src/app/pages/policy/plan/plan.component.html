@@ -1,5 +1,6 @@
 <mat-tab-group class="col-sm-12">
   @for (plan of plans(); track plan.ffm_id; let idx = $index) {
+    @let img_src = 'assets/' + company_img[plan.company] + '.png';
       <mat-tab [label]="'Plan ' + (idx + 1)">
         <mat-list style="height: 260px;">
             <div class="card border-light" style="border-radius: 10px; background: ghostwhite !important">
@@ -13,7 +14,7 @@
                         </div>                              
                     </div>
                     <div class="col-md-4 col-sm-4 d-flex justify-content-center align-items-center">
-                        <img id="dynamicImage" src="" class="img-fluid rounded-start" alt="..." >
+                        <img id="dynamicImage" [src]="img_src" class="img-fluid rounded-start" alt="..." >
                     </div>                              
                     <div class="col-md-8 col-sm-8">
                         <div class="card-body">                                
@@ -21,18 +22,25 @@
                                 <div class="col-sm-5 d-flex justify-content-center align-items-center text-center p-0">
                                     <table class="table m-0" style="--bs-table-bg: transparent">
                                         <tbody style="border: transparent">
+                                          @for (dependent of plan.dependents; track $index) {
                                             <tr>
-                                                <td style="padding: 0;"><img src="assets/svg/dependents.svg" style="margin-right: 3px; position: relative; bottom: 1.5px;" alt=""><span>{{plan.dependents}}</span></td>    
+                                                <td style="padding: 0;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-person-circle mr-2" viewBox="0 0 16 16">
+                                                  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                                  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                                                  </svg><span>{{dependent}}</span></td>
                                             </tr>
+                                          }
                                         </tbody>
                                     </table>
                                 </div>
-                                <mat-list class="col-sm-7">
-                                    <mat-list-item><span style="font-size: 12px;"><strong>Prima:</strong> </span><span title="Valor prima" id="prima_price"> {{plan.premium}}</span></mat-list-item>
-                                    <mat-list-item><span style="font-size: 12px;"><strong>Deducible:</strong> </span><span title="Deducible" id="deductible"> {{plan.deductible}}</span></mat-list-item>                                     
-                                    <mat-list-item><span style="font-size: 12px;"><strong>Max Desembolso: </strong> </span><span title="Max desembolso" id="max_desem"> {{plan.opp_max}}</span></mat-list-item>
-                                    <mat-list-item><span style="font-size: 12px;"><strong>Subscriber ID:</strong> </span><span title="plans id" id="plans_id"> {{plan.hios_id}}</span></mat-list-item>             
-                                </mat-list>
+                                <div class="col-sm-8" style="padding: 2px;">
+                                    <mat-list>
+                                        <mat-list-item><span style="font-size: 12px;"><strong>Prima:</strong> </span><span title="Valor prima" id="prima_price"> {{plan.premium}}</span></mat-list-item>
+                                        <mat-list-item><span style="font-size: 12px;"><strong>Deducible:</strong> </span><span title="Deducible" id="deductible"> {{plan.deductible}}</span></mat-list-item>                                     
+                                        <mat-list-item><span style="font-size: 12px;"><strong>Max Desembolso: </strong> </span><span title="Max desembolso" id="max_desem"> {{plan.opp_max}}</span></mat-list-item>
+                                        <mat-list-item><span style="font-size: 12px;"><strong>Subscriber ID:</strong> </span><span title="plans id" id="plans_id"> {{plan.hios_id}}</span></mat-list-item>             
+                                    </mat-list>
+                                </div>
                             </div>                                                                
                         </div>
                     </div>

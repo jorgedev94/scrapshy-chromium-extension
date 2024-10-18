@@ -13,4 +13,12 @@ import { Plan } from "src/app/models/plan.model";
 })
 export class PlanInfoComponent {
     plans = input<Array<Plan>>([new Plan()])
+
+    company_img = {
+        "Aetna": "aetna",
+        "Ambetter Health": "ambetter",
+        "Florida Blue HMO": "fb",
+        "Molina": "molina",
+        "Oscar": "oscar"
+    }
 }
