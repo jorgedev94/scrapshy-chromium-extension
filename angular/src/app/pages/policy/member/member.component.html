@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      @for (member of members(); track member.id) {
+      @for (member of members(); track $index) {
         <tr>
           @for (column of columns(); track $index) {
             <td>{{ member[column.key] }}</td>

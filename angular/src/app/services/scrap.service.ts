@@ -121,18 +121,121 @@ export class Scrapshy {
         }
     
         console.log(tableData);
-        return tableData;
     }
     
+    get_history(document) {
+        // XPath para seleccionar todas las filas excepto la fila de encabezado (usamos tbody/tr para excluir th)
+        const xpath = "//div[@id='aca-app-app-history']//table";
+        const result = document.evaluate(
+            xpath,
+            document,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null,
+        );
+    
+        // Array para almacenar las filas
+        const tableData: string[][] = [];
+    
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const row = result.snapshotItem(i) as HTMLElement;
+            if (row) {
+                // Extraer todas las celdas de esta fila
+                const cells = row.querySelectorAll('td');
+                const rowData: string[] = [];
+    
+                // Iterar sobre las celdas y extraer su contenido
+                cells.forEach((cell) => {
+                    rowData.push(cell.textContent?.trim() || '');
+                });
+    
+                // Agregar esta fila al array de la tabla
+                tableData.push(rowData);
+            }
+        }
+    
+        console.log(tableData);
+    }
 
+    get_consent(document) {
+        // XPath para seleccionar todas las filas excepto la fila de encabezado (usamos tbody/tr para excluir th)
+        //const xpath = "//div[@id='aca-app-coverage-details']//table/tbody/tr";
+        const xpath = "//div[@data-analytics-area='application-card']//table";
+        const result = document.evaluate(
+            xpath,
+            document,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null,
+        );
+    
+        // Array para almacenar las filas
+        const tableData: string[][] = [];
+        const tableData_2: string[][] = [];
+    
+        for (let i = 0; i < result.snapshotLength; i++) {
+            const row = result.snapshotItem(i) as HTMLElement;
+            const cols = row.querySelectorAll('tr');
+            console.log(cols.length)
+            if (i > 0) {
+                // Extraer todas las celdas de esta fila
+                const cells = row.querySelectorAll('td');
+                const rowData: string[] = [];
+    
+                // Iterar sobre las celdas y extraer su contenido
+                let j = 1
+                cells.forEach((cell) => {
+                    if(j % 2 == 0) {
+                        rowData.push(cell.textContent?.trim() || '');
+                    }
+                    j = j + 1
+                });                
+    
+                // Agregar esta fila al array de la tabla
+                tableData.push(rowData);
+            } else {
+                const cells = row.querySelectorAll('td');
+                let rowData: string[] = [];
+    
+                // Iterar sobre las celdas y extraer su contenido
+                let j = 0
+                cells.forEach((cell) => {
+                    rowData.push(cell.textContent?.trim() || '');
+                    if (j === 5 || j === 17) { 
+                        tableData_2.push([...rowData]); // Guarda la fila actual
+                        rowData = []; // Vacía para la siguiente fila
+                        j = 0; // Reinicia el contador
+                    } else {
+                        j++; // Incrementa el contador de celdas
+                    }                
+                });
+            }
+        }
+
+        console.log(tableData_2)
+        console.log(tableData)
+        
+        return [tableData_2, tableData[0], tableData[1], tableData[2]];
+    }
+    
     scrapPolicy(document): Policy {
-        const owner_test = this.get_application(document)
+        const xpath_consent = "//div[@data-analytics-area='consent-records-card']//table";
+        const xpath_plan = "//div[@id='aca-app-app-history']//table";
+        const xpath_app = "//div[@id='aca-app-coverage-details']//table/tbody/tr";
+        const xpath_details = "//div[@id='aca-app-coverage-details']//table/tbody/tr"
+        this.get_application(document)
+        this.get_history(document)
+        const [_members, _owner, _status, _brokers] = this.get_consent(document);
+        let members: Array<Member> = []
+        _members.forEach((member)  => {
+            members.push(new Member(member[0], member[0], member[1], member[2], member[3], member[4], member[5]))
+        })
         
         const address = new Address()
-        const owner_member = new Member(1, "OK", "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789", "7863124654")
+        const owner_member = new Member( "OK", "Devia", "dantedevenir@outlook.com", "545-54-4554", "1994-03-29", "54789")
         const owner = new Owner(address, ...Object.values(owner_member))
         const plans = [new Plan()]
-        const members = [new Member()]
+        
         return new Policy(owner, plans, members)
     }
 
