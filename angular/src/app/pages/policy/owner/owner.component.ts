@@ -5,6 +5,7 @@ import { Owner } from "src/app/models/owner.model";
 @Component({
     selector: "policy-owner",
     templateUrl: "owner.component.html",
+    styleUrls: ['../policy.component.scss'],
     imports: [MatListModule],
     standalone: true
 })
