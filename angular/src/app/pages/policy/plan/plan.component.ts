@@ -7,6 +7,7 @@ import { Plan } from "src/app/models/plan.model";
 @Component({
     selector: "policy-plan",
     templateUrl: "plan.component.html",
+    styleUrls: ['../policy.component.scss'],
     imports: [CommonModule, MatTabsModule, MatListModule],
     standalone: true
 })
