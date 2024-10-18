@@ -1,14 +1,21 @@
 export class Plan {
     constructor(
+        public status: string = '',
         public ffm_id: number = 1234567890,
         public hios_id: string = '45456FL546544',
+        public subscriber_id: string = '',
+        public policy_id: string = '',
         public name: string = '',
         public effective: string = '',
         public termination: string = '',
         public premium: string = '',
         public deductible: string = '',
-        public max_payout: string = '',
+        public opp_max: string = '',
+        public premium_total: string = '',
         public dependents: string = '',
+        public carrier_phone: string = '',
+        public payment_phone: string = '',
+        public agent_record: string = ''
     ) {
         //this.validate();
     }
@@ -62,7 +69,7 @@ export class Plan {
             throw new Error('deductible must be a positive number.');
         }
 
-        if (typeof this.max_payout !== 'number' || this.max_payout < 0) {
+        if (typeof this.opp_max !== 'number' || this.opp_max < 0) {
             throw new Error('max_payout must be a positive number.');
         }
 

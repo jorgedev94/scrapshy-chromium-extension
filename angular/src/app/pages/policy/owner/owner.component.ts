@@ -12,19 +12,21 @@ import { Owner } from "src/app/models/owner.model";
 export class OwnerInfoComponent {
     owner = input<Owner>(
         {
-            id: 1,
             firstname: "Juan",
             lastname: "Pérez",
-            email: "juan.perez@example.com",
             ssn: "123-45-6789",
             dob: "1990-01-01",
-            income: "50000",
+            gender: "Male",
+            tobacco: "",
+            eligibility: "",
             address: {
                 address: "Calle Falsa 123",
                 city: "Ciudad",
                 state: "Estado",
                 zipcode: "12345"
             },
+            email: "juan.perez@example.com",
+            income: "50000",
             phone: "555-1234"
         }
     )

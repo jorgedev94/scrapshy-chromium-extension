@@ -11,34 +11,6 @@ import { FooterComponent } from 'src/app/core/footer/footer.component';
   standalone: true,
   imports: [PageComponent, HeaderComponent, FooterComponent],
   templateUrl: 'popup.component.html',
-  styleUrls: ['popup.component.scss'],
-  providers: [Scrapshy]
+  styleUrls: ['popup.component.scss']
 })
-export class PopupComponent {
-  message = signal('')
-  scrapper = signal('');
-
-  constructor(
-    @Inject(TAB_ID) readonly tabId: number,
-    private sc: Scrapshy
-  ) {}
-
-  onClick() {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: this.tabId },
-        func: () => {
-          return this.sc.scrap(this.tabId);
-        }
-      },
-      (results) => {
-        // Los resultados de la función inyectada se devuelven aquí
-        if (results && results[0]) {
-          console.log('Resultado del script:', results[0].result);
-          //this.message.set(results[0].result); // Actualiza la señal con el resultado
-        }
-      }
-    );
-
-  }
-}
+export class PopupComponent {}
