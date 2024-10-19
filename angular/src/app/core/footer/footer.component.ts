@@ -6,6 +6,7 @@ import { Scrapshy } from "src/app/services/scrap.service";
 	selector: 'core-footer',
 	standalone: true,
 	templateUrl: 'footer.component.html',
+    styleUrls: ['footer.component.scss'],
     imports: [MatMenuModule]
 })
 export class FooterComponent {
