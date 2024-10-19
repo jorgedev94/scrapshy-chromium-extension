@@ -5,13 +5,11 @@
         <mat-list style="height: 260px;">
             <div class="card border-light" style="border-radius: 10px; background: ghostwhite !important">
                 <div class="row g-0 " style="border-radius: 10px;">
-                    <div class="card-header" style="background: ghostwhite !important">
-                        <div class="d-flex justify-content-between">
-                            <strong><small>{{plan.name}}</small></strong>
-                            <div>
-                                <span id="efectividad"><small>{{plan.effective}} - {{plan.termination}}</small></span>
-                            </div>                                  
-                        </div>                              
+                    <div class="card-header d-flex justify-content-between" style="background: ghostwhite !important">
+                        <strong><small>{{plan.name}}</small></strong>
+                        <div>
+                            <span id="efectividad"><small>{{plan.effective}} - {{plan.termination}}</small></span>
+                        </div>                                  
                     </div>
                     <div class="col-md-4 col-sm-4 d-flex justify-content-center align-items-center">
                         <img id="dynamicImage" [src]="img_src" class="img-fluid rounded-start p-4" alt="..." >
