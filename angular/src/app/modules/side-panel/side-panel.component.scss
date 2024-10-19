@@ -1,0 +1,19 @@
+.extension-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Altura completa de la ventana o del side panel */
+    min-height: 400px;
+}
+
+.extension-header, .extension-footer {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: center;
+    flex-shrink: 0; /* Evita que se reduzcan */
+}
+  
+.extension-body {
+    flex: 1; /* Ocupa todo el espacio disponible entre el header y el footer */
+    overflow-y: auto; /* Habilita el scroll solo en el cuerpo */
+    padding: 10px;
+}

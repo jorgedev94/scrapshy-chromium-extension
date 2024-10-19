@@ -1,3 +1,20 @@
-mat-card {
-    width: 100%;
+.extension-container {
+    display: flex;
+    flex-direction: column;
+    height: auto;       /* Permite que la altura se ajuste automáticamente */
+    max-height: 500px;  /* Establece la altura máxima en 500px */
+    overflow: hidden;   /* Oculta el desbordamiento para mantener el tamaño máximo */
+}
+  
+.extension-header, .extension-footer {
+    background-color: #f5f5f5;
+    padding: 3px;
+    text-align: center;
+    flex-shrink: 0; /* Evita que se reduzcan */
+}
+  
+.extension-body {
+    flex: 1; /* Ocupa todo el espacio disponible entre el header y el footer */
+    overflow-y: auto; /* Habilita el scroll solo en el cuerpo */
+    padding: 10px;
 }
