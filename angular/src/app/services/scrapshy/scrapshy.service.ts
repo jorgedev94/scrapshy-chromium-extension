@@ -51,7 +51,6 @@ export class ScrapshyService {
             if (chrome.runtime.lastError) {
                 throw new Error(chrome.runtime.lastError.message);
             } else if (injectionResult && injectionResult.result) {
-                console.log('Document actualizado:', injectionResult.result);
                 const domString: string = injectionResult.result as string;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(domString, 'text/html');

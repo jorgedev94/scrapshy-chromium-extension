@@ -19,4 +19,15 @@ export class Panel {
             [key: string]: Policy | Owner | Array<Member> | Array<Plan>
         } = {},
     ) {}
+
+    static fromJSON(json: any): Panel[] {
+        const jsonArray = Array.isArray(json) ? json : [json];
+
+        return jsonArray.map((item) => new Panel(
+            item.id,
+            item.title,
+            item.component,
+            item.data
+        ));
+    }
 }

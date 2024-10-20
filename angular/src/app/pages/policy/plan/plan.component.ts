@@ -15,10 +15,10 @@ export class PlanInfoComponent {
     plans = input<Array<Plan>>([new Plan()])
 
     company_img = {
-        "Aetna": "aetna",
+        "Aetna CVS Health": "aetna",
         "Ambetter Health": "ambetter",
         "Florida Blue HMO": "fb",
         "Molina": "molina",
-        "Oscar": "oscar"
+        "Oscar Insurance Company of Florida": "oscar"
     }
 }

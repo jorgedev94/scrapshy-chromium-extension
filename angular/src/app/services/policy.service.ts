@@ -78,8 +78,7 @@ export class PolicyService {
                 tableData.push(rowData);
             }
         }
-    
-        console.log(tableData);
+
     }
 
     extractPlanData(planRow) {
@@ -190,21 +189,17 @@ export class PolicyService {
 
     scrapPolicy(): Policy {
         const [_members, _owner] = this.scrapMember()
-        let members: Array<Member> = []
+        let members: Array<Member>
         _members.forEach((member)  => {
             members.push(new Member(member[0], member[1], member[2], member[3], member[4], member[5].slice(-4), member[6]))
         })
-        
-        const address = this.parseAddress(_owner[0][2])
-        const owner_member = new Member(members[0].firstname, members[0].lastname, members[0].gender, members[0].tobacco, members[0].dob, members[0].ssn, members[0].eligibility)
-        console.log(members[0])
-        console.log(owner_member)
-        const owner = new Owner(address, _owner[0][0], "", _owner[0][1], ...Object.values(owner_member))
-        
+        const address = this.parseAddress(_owner[0][2] ? _owner[0][2] : _owner[0][1])
+        const first_member = members[0]
+        const owner_member = new Member(first_member.firstname, first_member.lastname, first_member.gender, first_member.tobacco, first_member.dob, first_member.ssn, first_member.eligibility)
+        const owner = new Owner(address, _owner[0][2] ? _owner[0][0] : "", "", _owner[0][2] ? _owner[0][1] : _owner[0][0], ...Object.values(owner_member))
         const plans: Array<Plan> = this.scrapPlan()
-        
         const policy = new Policy(owner, plans, members)
-        console.log(policy)
+        
         return policy
     }
     

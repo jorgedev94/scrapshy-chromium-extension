@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, computed, input, OnInit } from "@angular/core";
+import { Component, computed, input } from "@angular/core";
 import { Member } from "src/app/models/member.model";
 
 @Component({
@@ -8,7 +8,7 @@ import { Member } from "src/app/models/member.model";
     imports: [CommonModule],
     standalone: true
 })
-export class MemberInfoComponent implements OnInit {
+export class MemberInfoComponent {
     members = input<Array<Member>>()
     capitalizeFirstLetter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -21,7 +21,4 @@ export class MemberInfoComponent implements OnInit {
             }
         ))
     )
-    ngOnInit() {
-        console.log(this.columns())
-    }
 }
