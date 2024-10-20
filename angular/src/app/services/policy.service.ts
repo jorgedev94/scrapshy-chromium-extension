@@ -5,6 +5,7 @@ import { Plan } from "../models/plan.model";
 import { Address } from "../models/address.model";
 import { Member } from "../models/member.model";
 import { Owner } from "../models/owner.model";
+import { _isNumberValue } from "@angular/cdk/coercion";
 
 
 @Injectable({
@@ -100,7 +101,7 @@ export class PolicyService {
         const imageElement = planRow.querySelector('img');
         let imageAlt = imageElement ? imageElement.getAttribute('alt').trim() : '';
         imageAlt = imageAlt.replace(/\s*\(.*?\)\s*/g, '').trim();
-    
+        console.log(imageAlt)
         return {
             planName: planName,
             premium: premium,
@@ -156,28 +157,44 @@ export class PolicyService {
         return plans
     }
     
-    scrapMember(): [Array<any>, any] {
+    scrapMember(): [Array<any>, any, any] {
         const xpath_application = "//div[@data-analytics-area='application-card']//table";
         const [_members, _owner] = this.sc.get_data_table(xpath_application);
+
+        const [_fullname, _income] = this.scrapNewMember()
     
-        const processedMembers = _members.map((member) => {
+        const processedMembers = _members.map((member, index) => {
             let updatedMember = [...member];
                 const fullName = updatedMember[0];
     
             if (fullName && typeof fullName === 'string') {
-                const nameParts = fullName.split(' ');
-    
-                if (nameParts.length > 1) {
-                    updatedMember[0] = nameParts[0]; 
-                    updatedMember.splice(1, 0, nameParts.slice(1).join(' ')); 
-                }
+                const nameParts = fullName.split(' ')
+                const _nameParts = _fullname.split(' ')
+
+                const firstname = nameParts[0]
+                const middlename = _nameParts[1].length == 1 && index == 0 ? nameParts[1] : ""
+                const lastname = _nameParts[1].length == 1 && index == 0 ? nameParts.slice(2).join(' ') : nameParts.slice(1).join(' ');
+
+                console.log(firstname)
+                console.log(middlename)
+                console.log(lastname)
+
+                updatedMember.push(firstname)
+                updatedMember.push(middlename)
+                updatedMember.push(lastname)
             }
-    
             return updatedMember;
         });
     
-        return [processedMembers, _owner];
+        return [processedMembers, _owner, _income];
     }    
+
+    scrapNewMember() {
+        const xpath_application = "//div[@role='presentation']//table";
+        const [_, _owner] = this.sc.get_data_table(xpath_application);
+    
+        return [_owner[1][0], _owner[1][2]]
+    } 
 
     parseAddress(addressString: string): Address {
         const regex = /^(.*?),\s*(.*?),\s*([A-Z]{2}),\s*(\d{5})/;
@@ -188,15 +205,18 @@ export class PolicyService {
     }
 
     scrapPolicy(): Policy {
-        const [_members, _owner] = this.scrapMember()
-        let members: Array<Member>
+        const [_members, _owner, _income] = this.scrapMember()
+        console.log(_income)
+        let members: Array<Member> = []
         _members.forEach((member)  => {
-            members.push(new Member(member[0], member[1], member[2], member[3], member[4], member[5].slice(-4), member[6]))
+            console.log(member)
+            members.push(new Member(member[6], member[7], member[8], member[1], member[2], member[3], member[4], member[5].slice(-4)))
         })
+        console.log(_members)
         const address = this.parseAddress(_owner[0][2] ? _owner[0][2] : _owner[0][1])
         const first_member = members[0]
-        const owner_member = new Member(first_member.firstname, first_member.lastname, first_member.gender, first_member.tobacco, first_member.dob, first_member.ssn, first_member.eligibility)
-        const owner = new Owner(address, _owner[0][2] ? _owner[0][0] : "", "", _owner[0][2] ? _owner[0][1] : _owner[0][0], ...Object.values(owner_member))
+        const owner_member = new Member(first_member.firstname, first_member.middlename, first_member.lastname, first_member.gender, first_member.tobacco, first_member.dob, first_member.ssn, first_member.eligibility)
+        const owner = new Owner(address, _owner[0][2] ? _owner[0][0] : "", _income, _owner[0][2] ? _owner[0][1] : _owner[0][0], ...Object.values(owner_member))
         const plans: Array<Plan> = this.scrapPlan()
         const policy = new Policy(owner, plans, members)
         

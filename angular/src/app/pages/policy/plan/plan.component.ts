@@ -18,6 +18,7 @@ export class PlanInfoComponent {
         "Aetna CVS Health": "aetna",
         "Ambetter Health": "ambetter",
         "Florida Blue HMO": "fb",
+        "Florida Blue": "fb",
         "Molina": "molina",
         "Oscar Insurance Company of Florida": "oscar"
     }

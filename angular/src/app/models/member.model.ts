@@ -1,6 +1,7 @@
 export class Member {
     constructor(
         public firstname: string = '',
+        public middlename: string = '',
         public lastname: string = '',
         public gender: string = '',
         public tobacco: string = '',

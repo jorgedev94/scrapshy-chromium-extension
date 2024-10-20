@@ -13,6 +13,7 @@ export class OwnerInfoComponent {
     owner = input<Owner>(
         {
             firstname: "Juan",
+            middlename: "Angel",
             lastname: "Pérez",
             ssn: "123-45-6789",
             dob: "1990-01-01",

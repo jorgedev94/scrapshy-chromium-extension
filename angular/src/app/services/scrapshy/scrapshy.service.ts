@@ -44,7 +44,25 @@ export class ScrapshyService {
             const [injectionResult] = await chrome.scripting.executeScript({
                 target: { tabId: this.tabId },
                 func: () => {
-                    return document.documentElement.outerHTML;
+                    const xpath = "//button[span[text()='View or Edit Application']]";
+                    const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+                    const targetButton = result.singleNodeValue as HTMLElement | null;
+
+                    if (targetButton) {
+                        targetButton.click();
+                    }
+                    
+                    const doc = document.documentElement.outerHTML;
+
+                    const xpath_close = "//div[@role='dialog']//button[@aria-label='close']";
+                    const result_close = document.evaluate(xpath_close, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+                    const closeButton = result_close.singleNodeValue as HTMLElement | null;
+
+                    if (closeButton) {
+                        closeButton.click();
+                    }
+
+                    return doc
                 },
             });
 
@@ -54,6 +72,7 @@ export class ScrapshyService {
                 const domString: string = injectionResult.result as string;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(domString, 'text/html');
+                console.log(doc)
                 this._document.set(doc);
             } else {
                 throw new Error('No se obtuvo el DOM.');

@@ -4,7 +4,9 @@
             <div class="card-header" style="background: ghostwhite !important">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <strong id="firstname">{{owner().firstname}} </strong><strong id="lastname">{{ owner().lastname }}</strong>
+                        <strong id="firstname">{{owner().firstname}} </strong>
+                        <strong id="middlename">{{owner().middlename}} </strong>
+                        <strong id="lastname">{{ owner().lastname }}</strong>
                     </div>                                  
                     <div [style.color]="owner().eligibility == 'Not Applying' || owner().eligibility == 'Not Applying' ? 'red' : 'green'">
                         <img [src]="owner().eligibility === 'Not Applying' || owner().eligibility === 'No aplica' ? 'assets/svg/error.svg' : 'assets/svg/check.svg'" alt="">
