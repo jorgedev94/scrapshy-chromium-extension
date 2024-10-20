@@ -1,7 +1,7 @@
 <div id="content" class="container-fluid p-2">
     <mat-accordion>
         @for (panel of panels(); track panel.id) {
-            <mat-expansion-panel [disabled]="!isDisabled()"  [expanded]="!isDisabled()" style="background: ghostwhite !important">
+            <mat-expansion-panel [disabled]="isDisabled"  [expanded]="!isDisabled" style="background: ghostwhite !important">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <strong>{{panel.title}}</strong>

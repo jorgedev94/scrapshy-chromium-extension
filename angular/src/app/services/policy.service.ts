@@ -13,6 +13,7 @@ import { Owner } from "../models/owner.model";
 export class PolicyService {
 
     private _policy = signal(new Policy());
+    private _isDisabled = signal(true);
 
     get policySignal(): WritableSignal<Policy> {
         return this._policy;
@@ -23,10 +24,15 @@ export class PolicyService {
     async onClick() {
         await this.sc.get_dom()
         this._policy.set(this.scrapPolicy())
+        this._isDisabled.set(false)
     }
 
     clean() {
         this._policy.set(new Policy())
+    }
+
+    get isDisabledSignal(): WritableSignal<boolean> {
+        return this._isDisabled
     }
 
     get_owner() {
