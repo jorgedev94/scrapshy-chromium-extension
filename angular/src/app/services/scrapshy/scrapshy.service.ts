@@ -55,8 +55,7 @@ export class ScrapshyService {
                 const domString: string = injectionResult.result as string;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(domString, 'text/html');
-                this._document.set(doc); // Actualizamos la señal con el Document parseado
-                console.log('Document actualizado:', doc); // Log para verificar
+                this._document.set(doc);
             } else {
                 throw new Error('No se obtuvo el DOM.');
             }
