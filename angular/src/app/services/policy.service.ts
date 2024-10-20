@@ -1,76 +1,40 @@
-import { Inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { Policy } from '../models/policy.model';
-import { TAB_ID } from '../app.config';
-import { Owner } from '../models/owner.model';
-import { Plan } from '../models/plan.model';
-import { Member } from '../models/member.model';
-import { Address } from '../models/address.model';
+import { Injectable, signal, WritableSignal } from "@angular/core";
+import { ScrapshyService } from "./scrapshy/scrapshy.service";
+import { Policy } from "src/app/models/policy.model";
+import { Plan } from "../models/plan.model";
+import { Address } from "../models/address.model";
+import { Member } from "../models/member.model";
+import { Owner } from "../models/owner.model";
+
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
-export class Scrapshy {
+export class PolicyService {
+
     private _policy = signal(new Policy());
 
     get policySignal(): WritableSignal<Policy> {
         return this._policy;
     }
 
-    constructor(
-        @Inject(TAB_ID) readonly tabId: number,
-    ) {}
+    constructor(private sc: ScrapshyService) {}
 
     async onClick() {
-        const document = await this.get_dom()
-            .then((domString) => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(domString, 'text/html');
-                return doc
-            })
-            .catch((error) => {
-                console.error('Error al obtener el DOM:', error);
-            });
-        console.log(document);
-        this._policy.set(this.scrapPolicy(document))
+        await this.sc.get_dom()
+        this._policy.set(this.scrapPolicy())
     }
 
-    get_dom(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            // Capturamos las referencias de resolve y reject
-            const resolveRef = resolve;
-            const rejectRef = reject;
-    
-            chrome.scripting.executeScript(
-                {
-                    target: { tabId: this.tabId },
-                    func: () => {
-                        return document.documentElement.outerHTML;
-                    },
-                },
-                (injectionResults) => {
-                    if (chrome.runtime.lastError) {
-                        rejectRef(chrome.runtime.lastError);
-                    } else if (injectionResults && injectionResults[0] && injectionResults[0].result) {
-                        resolveRef(injectionResults[0].result);
-                    } else {
-                        rejectRef(new Error('No se obtuvo el DOM.'));
-                    }
-                }
-            );
-        });
+    clean() {
+        this._policy.set(new Policy())
     }
 
-    getSpanTexts(document, texts: string[]) {
+    get_owner() {
+        const texts = ['ID de FFM', 'FFM ID']
         const textConditions = texts.map((text) => `text()="${text}"`).join(' or ');
         const xpath = `//tr/td[span[${textConditions}]]/following-sibling::td/span`;
 
-        const result = document.evaluate(
-            xpath,
-            document,
-            null,
-            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-            null,
-        );
+        const result = this.sc.evaluate(xpath);
         
         const values: string[] = [];
 
@@ -83,22 +47,11 @@ export class Scrapshy {
 
         return values;
     }
-    
-    get_owner(document) {
-        const texts = ['ID de FFM', 'FFM ID']
-        return this.getSpanTexts(document ,texts);
-    }
 
-    get_application(document, xpath, context = null) {
+    get_application(xpath) {
         // XPath para seleccionar todas las filas excepto la fila de encabezado (usamos tbody/tr para excluir th)
         
-        const result = document.evaluate(
-            xpath,
-            document,
-            context,
-            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-            null,
-        );
+        const result = this.sc.evaluate(xpath);
     
         // Array para almacenar las filas
         const tableData: string[][] = [];
@@ -122,39 +75,6 @@ export class Scrapshy {
     
         console.log(tableData);
     }
-    
-    get_data_table(document, xpath, context = null, resolver= null, result = null) {
-        const resultEval = document.evaluate(xpath, context == null ? document : context, resolver, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, result);
-    
-        const tableDataHorizontal: string[][] = [];
-        const tableDataVertical: string[][] = [];
-        
-        for (let i = 0; i < resultEval.snapshotLength; i++) {
-            const row = resultEval.snapshotItem(i) as HTMLElement;
-            const cells = row.querySelectorAll('td');
-            const cols = row.querySelectorAll('tr');
-            
-            let rowData: string[] = [];
-            cells.forEach((cell, index) => {
-                const content = cell.textContent?.trim() || '';
-                if (cells.length / cols.length !== 2) {
-                    rowData.push(content);
-                    if ((index + 1) % 6 === 0) {
-                        tableDataHorizontal.push([...rowData]);
-                        rowData = [];
-                    }
-                } else if ((index + 1) % 2 === 0) {
-                    rowData.push(content);
-                }
-            });
-            
-            if (rowData.length > 0) {
-                tableDataVertical.push(rowData);
-            }       
-        }
-        
-        return [tableDataHorizontal, tableDataVertical];
-    }   
 
     extractPlanData(planRow) {
         let planName = planRow.querySelector('span[role="button"]').textContent.trim();
@@ -186,17 +106,16 @@ export class Scrapshy {
         };
     }
 
-    scrapPlan(document) {
+    scrapPlan() {
         let plans: Array<Plan> = []
-        const planRows = document.querySelectorAll('#aca-app-coverage-details .row');
+        const planRows = this.sc.querySelectorAll('#aca-app-coverage-details .row');
         planRows.forEach((plan) => {
             const divs = plan.querySelectorAll(':scope > div');
             if (divs.length > 1) {
                 const tableExists = divs[1].querySelector('table') !== null;
                 if (tableExists) {
-                    //const [] = this.get_data_card(document)
                     const plan_details = this.extractPlanData(divs[0])
-                    const [_, plan_info] = this.get_data_table(document, './/table', divs[1]);
+                    const [_, plan_info] = this.sc.get_data_table('.//table', divs[1]);
                     const status = plan_info[0][0]
                     const ffm_id = Number(plan_info[0][6])
                     const hios_id = ""
@@ -232,9 +151,9 @@ export class Scrapshy {
         return plans
     }
     
-    scrapMember(document: Document): [Array<any>, any] {
+    scrapMember(): [Array<any>, any] {
         const xpath_application = "//div[@data-analytics-area='application-card']//table";
-        const [_members, _owner] = this.get_data_table(document, xpath_application);
+        const [_members, _owner] = this.sc.get_data_table(xpath_application);
     
         const processedMembers = _members.map((member) => {
             let updatedMember = [...member];
@@ -263,8 +182,8 @@ export class Scrapshy {
         return new Address(address.trim(), city.trim(), state.trim(), zipcode.trim());
     }
 
-    scrapPolicy(document): Policy {
-        const [_members, _owner] = this.scrapMember(document)
+    scrapPolicy(): Policy {
+        const [_members, _owner] = this.scrapMember()
         let members: Array<Member> = []
         _members.forEach((member)  => {
             members.push(new Member(member[0], member[1], member[2], member[3], member[4], member[5].slice(-4), member[6]))
@@ -276,10 +195,11 @@ export class Scrapshy {
         console.log(owner_member)
         const owner = new Owner(address, _owner[0][0], "", _owner[0][1], ...Object.values(owner_member))
         
-        const plans: Array<Plan> = this.scrapPlan(document)
+        const plans: Array<Plan> = this.scrapPlan()
         
         const policy = new Policy(owner, plans, members)
         console.log(policy)
         return policy
     }
+    
 }

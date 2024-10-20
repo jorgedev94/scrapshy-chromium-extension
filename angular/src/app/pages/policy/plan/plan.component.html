@@ -1,5 +1,5 @@
 <mat-tab-group class="col-sm-12">
-  @for (plan of plans(); track plan.ffm_id; let idx = $index) {
+  @for (plan of plans(); track $index; let idx = $index) {
     @let img_src = 'assets/' + company_img[plan.company] + '.png';
       <mat-tab [label]="'Plan ' + (idx + 1)">
         <mat-list style="height: 260px;">
