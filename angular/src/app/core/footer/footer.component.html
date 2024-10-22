@@ -1,16 +1,14 @@
 <div id="footer" class="container-fluid bg-primary">
-    <div class="row">
-        <div class="col-sm-4">
-            <button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary" style="float: inline-start;">
-                <img src="assets/svg/options.svg" alt="">
-            </button>
-            <mat-menu #menu="matMenu" class="bg-primary">
-                <button mat-menu-item (click)="onClick()" class="text-center">SCRAP</button>
-                <button mat-menu-item class="text-center">COMPARE</button>
-                <button mat-menu-item (click)="clean()" class="text-center">CLEAN</button>
-            </mat-menu>        
-        </div>
-        <div class="col-sm-4 d-flex justify-content-center align-items-center p-2">
+    <div class="d-flex justify-content-between">
+        <button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary">
+            <img src="assets/svg/options.svg" alt="">
+        </button>
+        <mat-menu #menu="matMenu" class="bg-primary">
+            <button mat-menu-item (click)="onClick()" class="text-center">SCRAP</button>
+            <button mat-menu-item class="text-center">COMPARE</button>
+            <button mat-menu-item (click)="clean()" class="text-center">CLEAN</button>
+        </mat-menu>        
+        <div class="d-flex justify-content-center align-items-center p-2">
             <div>
                 <span>Created with </span>
             </div>
@@ -19,8 +17,6 @@
                 <img src="assets/svg/angular.svg"  alt="">
             </div>
         </div>
-        <div class="col-sm-4">
-            <img src="assets/svg/github.svg" class="float-end p-2" alt="">
-        </div>
+        <img src="assets/svg/github.svg" class="p-2" alt="">
     </div>
 </div>
