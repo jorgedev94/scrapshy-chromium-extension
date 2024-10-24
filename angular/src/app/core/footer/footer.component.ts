@@ -27,4 +27,14 @@ export class FooterComponent {
         const url = 'https://github.com/smoncada19/scrapshy-chromium-extension';
         window.open(url, '_blank')
     }
+
+    OpenBootstrap(){
+        const url = 'https://getbootstrap.com/';
+        window.open(url, '_blank')
+    }
+
+    OpenAngular(){
+        const url = 'https://angular.dev/';
+        window.open(url, '_blank')
+    }
 }
