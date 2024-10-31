@@ -8,7 +8,7 @@
                         <strong id="middlename">{{owner().middlename}} </strong>
                         <strong id="lastname">{{ owner().lastname }}</strong>
                     </div>                                  
-                    <div [style.color]="owner().eligibility == 'Not Applying' || owner().eligibility == 'Not Applying' ? 'red' : 'green'">
+                    <div [style.color]="owner().eligibility == 'Not Applying' || owner().eligibility == 'No aplica' ? 'red' : 'green'">
                         <img [src]="owner().eligibility === 'Not Applying' || owner().eligibility === 'No aplica' ? 'assets/svg/error.svg' : 'assets/svg/check.svg'" alt="">
                         <span style="font-size: 15px;" title="Estado"> {{owner().eligibility}}</span>
                     </div>                                  
